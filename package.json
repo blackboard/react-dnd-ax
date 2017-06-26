@@ -15,7 +15,11 @@
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-react-app": "^3.0.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
     "babel-runtime": "6.23.0",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
@@ -41,6 +45,7 @@
     "promise": "7.1.1",
     "react-dev-utils": "^3.0.0",
     "react-error-overlay": "^1.0.7",
+    "rimraf": "^2.6.1",
     "style-loader": "0.17.0",
     "sw-precache-webpack-plugin": "0.9.1",
     "url-loader": "0.5.8",
@@ -56,7 +61,9 @@
     "start": "npm-run-all -p watch-css start-dev",
     "build-script": "node scripts/build.js",
     "build": "npm run build-css && build-script",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "build:npm": "npm run clean && babel src/react-dnd-ax --out-dir dist --ignore *.test.js",
+    "clean": "rimraf dist"
   },
   "jest": {
     "collectCoverageFrom": [
