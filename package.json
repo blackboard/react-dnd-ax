@@ -1,13 +1,16 @@
 {
-  "name": "example-react-dnd-ax",
-  "version": "0.1.0",
-  "private": true,
+  "name": "test-npm-upload",
+  "version": "1.0.6",
+  "description": "React drag and drop HOC with accessibility and keyboard actions support.",
+  "main": "dist/index.js",
+  "author": "Ethan Li, Viking Zhang",
+  "license": "MIT",
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-fa": "^4.2.0",
     "react-sortable-hoc": "^0.6.3",
-    "test-npm-upload": "^1.0.3"
+    "test-npm-upload": "^1.0.6"
   },
   "devDependencies": {
     "autoprefixer": "7.1.0",
@@ -62,8 +65,9 @@
     "build-script": "node scripts/build.js",
     "build": "npm run build-css && build-script",
     "test": "node scripts/test.js --env=jsdom",
-    "build:npm": "npm run clean && babel src/react-dnd-ax --out-dir dist --ignore *.test.js",
-    "clean": "rimraf dist"
+    "npm:build": "npm run npm:clean && babel src/react-dnd-ax --out-dir dist --ignore *.test.js && npm run npm:css",
+    "npm:clean": "rimraf dist",
+    "npm:css": "cp src/react-dnd-ax/react-dnd-ax.css dist/"
   },
   "jest": {
     "collectCoverageFrom": [

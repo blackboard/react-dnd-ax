@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ClassNames from 'classnames'
 import { omit, getDisplayName } from './utils'
 
-import './drag-n-drop-item.css'
+import './react-dnd-ax.css'
 
 const DragNDropItem = (WrappedComponent) => {
   class Wrapper extends React.Component {

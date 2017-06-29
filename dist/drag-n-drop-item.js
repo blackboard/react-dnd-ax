@@ -22,7 +22,7 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _utils = require('./utils');
 
-require('./drag-n-drop-item.css');
+require('./react-dnd-ax.css');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

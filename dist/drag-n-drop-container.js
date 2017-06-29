@@ -22,8 +22,6 @@ var _consts2 = _interopRequireDefault(_consts);
 
 var _utils = require('./utils');
 
-require('./drag-n-drop-container.css');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }

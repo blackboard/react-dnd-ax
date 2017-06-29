@@ -5,8 +5,6 @@ import KeyCode from './consts'
 import { moveItem } from './utils'
 import { getDisplayName } from './utils'
 
-import './drag-n-drop-container.css'
-
 const SCROLL_RANGE = 150
 const SCROLL_ACC_PX = 5
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Icon} from 'react-fa'
 
-import {DragNDropContainer, DragNDropItem} from '../dist/'
+import {DragNDropContainer, DragNDropItem} from 'test-npm-upload/dist'
 import {basicItems} from './data'
 
 class BasicExample extends React.Component {
