@@ -45,18 +45,24 @@ var SortableItem = Sortable.DragNDropItem
 ## PropTypes
 
 **DragNDropItem**
-| 属性 | 类型 | 描述 |
-| --- | --- | --- |
-| index | number | --- |
-| item | object | --- |
-| preview | React Element | --- |
+
+
+ 属性 | 类型 | 描述 
+ --- | --- | --- 
+ index | number | --- 
+ item | object | --- 
+ preview | React Element | --- 
+
+
 **DragNDropContainer**
-| Property | Type | Description |
-| --- | --- | --- |
-| items | Array | --- |
-| onReorderItem | Function | --- |
-| onDragStart | Function | --- |
-| onDragMove | Function | --- |
+
+
+ 属性 | 类型 | 描述 
+ --- | --- | --- 
+ items | Array | --- 
+ onReorderItem | Function | --- 
+ onDragStart | Function | --- 
+ onDragMove | Function | --- 
 
 ## 运行本地实例
 
