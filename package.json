@@ -6,11 +6,12 @@
   "author": "Ethan Li, Viking Zhang",
   "license": "MIT",
   "dependencies": {
+    "classnames": "^2.2.5",
+    "react-fa": "^4.2.0"
+  },
+  "peerDependencies": {
     "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-fa": "^4.2.0",
-    "react-sortable-hoc": "^0.6.3",
-    "test-npm-upload": "^1.0.6"
+    "react-dom": "^15.6.1"
   },
   "devDependencies": {
     "autoprefixer": "7.1.0",
@@ -51,6 +52,7 @@
     "rimraf": "^2.6.1",
     "style-loader": "0.17.0",
     "sw-precache-webpack-plugin": "0.9.1",
+    "test-npm-upload": "^1.0.6",
     "url-loader": "0.5.8",
     "webpack": "2.6.1",
     "webpack-dev-server": "2.4.5",
