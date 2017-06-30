@@ -6,14 +6,14 @@
   "author": "Ethan Li, Viking Zhang",
   "license": "MIT",
   "dependencies": {
-    "classnames": "^2.2.5",
-    "react-fa": "^4.2.0"
+    "classnames": "^2.2.5"
   },
   "peerDependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },
   "devDependencies": {
+    "react-fa": "^4.2.0",
     "autoprefixer": "7.1.0",
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.3",
