@@ -69,7 +69,8 @@
     "test": "node scripts/test.js --env=jsdom",
     "npm:build": "npm run npm:clean && babel src/react-dnd-ax --out-dir dist --ignore *.test.js && npm run npm:css",
     "npm:clean": "rimraf dist",
-    "npm:css": "cp src/react-dnd-ax/react-dnd-ax.css dist/"
+    "npm:css": "cp src/react-dnd-ax/react-dnd-ax.css dist/",
+    "npm:publish": "npm run npm:build && npm version patch && npm publish"
   },
   "jest": {
     "collectCoverageFrom": [
