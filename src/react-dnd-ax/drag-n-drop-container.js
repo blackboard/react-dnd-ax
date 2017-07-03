@@ -43,9 +43,15 @@ const DragNDropContainer = (WrappedComponent) => {
         transparentElem.id = 'dnd-drag-placeholder'
         document.body.appendChild(transparentElem)
       }
+
+      this.clientY = 0
     }
 
     componentDidMount() {
+      // to retrieve clientY in FF
+      // https://stackoverflow.com/questions/887316/how-do-i-get-clientx-and-clienty-to-work-inside-my-drag-event-handler-on-firef
+      window.addEventListener('dragover', this.setClientY)
+
       window.addEventListener('click', this.leaveKeyboardMoving)
       this.baseStateContainer = document.getElementById('main-content-inner')
       setTimeout(() => { // after angular digest for peek panel finished, 'side-panel-content' is available
@@ -73,6 +79,10 @@ const DragNDropContainer = (WrappedComponent) => {
       return true
     }
 
+    setClientY = (e) => {
+      this.clientY = e.clientY
+    }
+
     leaveKeyboardMoving = () => {
       if (this.state.isKeyboardMoving) {
         this.setState({
@@ -86,12 +96,12 @@ const DragNDropContainer = (WrappedComponent) => {
     onDrag = (e, dragPreviewRef) => {
       e.preventDefault()
       // position move is out of control of react render, so we use id instead of ref
-      dragPreviewRef.style.top = `${e.clientY}px` // eslint-disable-line no-param-reassign
+      dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
 
       const {ultraStateType} = this.props
 
       // increase scroll area
-      if (e.clientY < SCROLL_RANGE) {
+      if (this.clientY < SCROLL_RANGE) {
         if (ultraStateType === 'base' && this.baseStateContainer) {
           this.baseStateContainer.scrollTop -= SCROLL_ACC_PX
           return
@@ -100,7 +110,7 @@ const DragNDropContainer = (WrappedComponent) => {
           return
         }
         scrollBy(0, 0 - SCROLL_ACC_PX)
-      } else if (innerHeight - e.clientY < SCROLL_RANGE) {
+      } else if (innerHeight - this.clientY < SCROLL_RANGE) {
         if (ultraStateType === 'base' && this.baseStateContainer) {
           this.baseStateContainer.scrollTop += SCROLL_ACC_PX
           return

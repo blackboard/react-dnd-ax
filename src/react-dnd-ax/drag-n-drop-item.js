@@ -22,6 +22,7 @@ const DragNDropItem = (WrappedComponent) => {
         this.dragPointElem.addEventListener('dragstart', (e) => {
           // hide the default drag preview image
           e.dataTransfer.setDragImage(document.getElementById('dnd-drag-placeholder'), 0, 0)
+          e.dataTransfer.setData('text/plain', '') // make dnd work in FF
           actions.onDragStart(e, index)
         })
         this.dragPointElem.addEventListener('dragend', actions.onDragEnd)
