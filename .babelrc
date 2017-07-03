@@ -1,8 +1,40 @@
 {
-  "presets": [
-    "es2015",
-    "react",
-    "stage-0",
-    "stage-1"
-  ]
+    "env": {
+        "development": {
+            "presets": [
+                "es2015",
+                "react",
+                "stage-0",
+                "stage-1"
+            ]
+        },
+        "commonjs": {
+            "presets": [
+                "es2015",
+                "react",
+                "stage-0",
+                "stage-1"
+            ]
+        },
+        "es6": {
+            "presets": [
+                "es2015-rollup",
+                "react",
+                "stage-0",
+                "stage-1"
+            ],
+            "plugins": [
+                "transform-runtime"
+            ]
+        },
+        "production": {
+            "presets": ["es2015", "react", "stage-0", "stage-1"],
+            "plugins": ["transform-runtime", "transform-object-assign"]
+        },
+        "testing": {
+            "presets": ["es2015", "react", "stage-0", "stage-1"],
+            "plugins": ["transform-object-assign"]
+        }
+
+    }
 }
