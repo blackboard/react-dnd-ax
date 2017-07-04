@@ -78,6 +78,7 @@ var SortableItem = Sortable.DragNDropItem
 npm install
 npm run storybook
 ```
+然后打开 http://localhost:9001 可以查看所有例子
 
 ##  npm 命令
 
