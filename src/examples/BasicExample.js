@@ -47,7 +47,6 @@ class BasicExample extends React.Component {
                 item={item}
                 index={index}
                 key={item.id}
-                module={item}
                 preview={
                   <div>
                     {item.text}

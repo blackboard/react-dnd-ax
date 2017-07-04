@@ -129,11 +129,6 @@ const DragNDropItem = (WrappedComponent) => {
         index !== state.sourceIndex,
       })
 
-      if (module.props && module.props.name === 'placeholder') {
-        console.log('return module');
-        return module
-      }
-
       return (
         <div className={moduleSectionClass} ref={(ref) => {
           this.moduleRef = ref
@@ -218,7 +213,6 @@ const DragNDropItem = (WrappedComponent) => {
     index: PropTypes.number.isRequired,
     actions: PropTypes.object.isRequired,
     state: PropTypes.object.isRequired,
-    module: PropTypes.object.isRequired,
     preview: PropTypes.element.isRequired,
   }
 

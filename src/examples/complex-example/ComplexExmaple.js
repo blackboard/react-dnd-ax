@@ -28,7 +28,6 @@ class ComplexExample extends React.Component {
             props.items.map((country, index) => {
               return <ModuleItem
                 country={country}
-                module={country}
                 index={index}
                 key={country.name}
                 preview={<span>{country.name}</span>}
