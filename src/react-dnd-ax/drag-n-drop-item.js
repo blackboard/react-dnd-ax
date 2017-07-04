@@ -34,7 +34,7 @@ const DragNDropItem = (WrappedComponent) => {
           e.stopPropagation()
           actions.onClickDrag(e, index, preview)
         })
-        this.moduleRef.addEventListener('keydown', actions.onKeyChangeOrder)
+        this.itemRef.addEventListener('keydown', actions.onKeyChangeOrder)
       }
     }
 
@@ -82,17 +82,17 @@ const DragNDropItem = (WrappedComponent) => {
         this.firstKeyInsertPlaceHolderRef.focus()
       } else if (this.downKeyInsertPlaceHolderRef.className.includes('show')) {
         this.downKeyInsertPlaceHolderRef.focus()
-      } else if (this.moduleRef.className.includes('is-keyboard-moving') && this.moduleRef.className.includes('should-on-focus')) {
-        this.moduleRef.focus()
+      } else if (this.itemRef.className.includes('is-keyboard-moving') && this.itemRef.className.includes('should-on-focus')) {
+        this.itemRef.focus()
       }
       if (this.dragPreviewRef.className.includes('show')) {
-        this.dragPreviewRef.style.width = getComputedStyle(this.moduleRef).getPropertyValue('width')
+        this.dragPreviewRef.style.width = getComputedStyle(this.itemRef).getPropertyValue('width')
       }
     }
 
     render() {
-      const {state, index, module, actions, preview} = this.props
-      const moduleSectionClass = ClassNames({
+      const {state, index, actions, preview} = this.props
+      const itemSectionClass = ClassNames({
         'module-section': true,
         'is-dragging': state.isDragging && state.sourceIndex === index,
         'is-keyboard-moving': state.isKeyboardMoving && index === state.sourceIndex,
@@ -130,8 +130,8 @@ const DragNDropItem = (WrappedComponent) => {
       })
 
       return (
-        <div className={moduleSectionClass} ref={(ref) => {
-          this.moduleRef = ref
+        <div className={itemSectionClass} ref={(ref) => {
+          this.itemRef = ref
         }} tabIndex="-1">
           {index === 0 ? <div className={firstInsertPlaceHolderClass}/> : ''}
           {index === 0 ?

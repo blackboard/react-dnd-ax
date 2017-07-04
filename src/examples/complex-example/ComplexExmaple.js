@@ -21,17 +21,16 @@ class ComplexExample extends React.Component {
     const ModuleItem = DragNDropItem(Country)
 
     const CountryList = DragNDropContainer((props) => {
-      console.log(props.countries);
       return (
         <div>
           {
             props.items.map((country, index) => {
               return <ModuleItem
                 country={country}
-                index={index}
-                key={country.name}
-                preview={<span>{country.name}</span>}
-                {...props}
+                index={index} // mandatory: index is required by react-dnd-ax
+                key={country.name} // provide the key for react
+                preview={<span>{country.name}</span>} // you can define your own preview element here
+                {...props} // mandatory: need to pass down the props
               />
             })
           }

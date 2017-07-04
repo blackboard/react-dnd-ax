@@ -143,9 +143,9 @@ const DragNDropContainer = (WrappedComponent) => {
     onDrop = (e, targetIndex) => {
       const {items} = this.props
       e.preventDefault()
-      const newOrderModules = moveItem(items, items[this.state.sourceIndex], targetIndex)
+      const newOrderItems = moveItem(items, items[this.state.sourceIndex], targetIndex)
       const sourceDragItem = items[this.state.sourceIndex]
-      this.props.onReorderItem(newOrderModules, sourceDragItem)
+      this.props.onReorderItem(newOrderItems, sourceDragItem)
     }
 
     onDragOver = (e, index) => {
@@ -236,9 +236,9 @@ const DragNDropContainer = (WrappedComponent) => {
             break
           }
           case KeyCode.ENTER: {
-            const newOrderModules = moveItem(items, items[this.state.sourceIndex], this.state.keyInsertIndex)
+            const newOrderItems = moveItem(items, items[this.state.sourceIndex], this.state.keyInsertIndex)
             const sourceDragItem = items[this.state.sourceIndex]
-            this.props.onReorderItem(newOrderModules, sourceDragItem)
+            this.props.onReorderItem(newOrderItems, sourceDragItem)
             break
           }
           case KeyCode.ARROW_UP: {
