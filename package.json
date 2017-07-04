@@ -14,6 +14,9 @@
     "react-dom": "^15.6.1"
   },
   "devDependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "@storybook/react": "^3.1.7",
     "argv": "0.0.2",
     "autoprefixer": "7.1.0",
     "babel-cli": "^6.24.1",
@@ -74,6 +77,7 @@
     "start": "npm-run-all -p watch-css start-dev",
     "build-script": "node scripts/build.js",
     "npm:build": "npm run build-css && build-script",
+    "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "node scripts/test.js --env=jsdom",
     "build": "npm run build:commonjs && npm run build:es6 && npm run build:umd && npm run npm:css",
     "build:commonjs": "npm run clean:commonjs && cross-env BABEL_ENV=commonjs babel src/react-dnd-ax --out-dir dist/commonjs --ignore *.example.js,*.test.js",
