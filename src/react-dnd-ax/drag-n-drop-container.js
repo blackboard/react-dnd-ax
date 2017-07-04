@@ -94,7 +94,6 @@ const DragNDropContainer = (WrappedComponent) => {
     }
 
     onDrag = (e, dragPreviewRef) => {
-      e.preventDefault()
       // position move is out of control of react render, so we use id instead of ref
       dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
 

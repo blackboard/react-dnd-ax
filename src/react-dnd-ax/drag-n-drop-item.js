@@ -128,7 +128,9 @@ const DragNDropItem = (WrappedComponent) => {
         (index + 1) === state.keyInsertIndex &&
         index !== state.sourceIndex,
       })
+
       if (module.props && module.props.name === 'placeholder') {
+        console.log('return module');
         return module
       }
 
