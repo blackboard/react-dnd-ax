@@ -3,7 +3,9 @@ import React from 'react'
 import { DragNDropContainer, DragNDropItem } from '../../react-dnd-ax'
 import { countries } from '../data'
 import Country from './Country'
-// import './ComplexExample.scss'
+
+import '../styles/common.scss'
+import './ComplexExample.scss'
 
 class ComplexExample extends React.Component {
   state = {
@@ -11,6 +13,7 @@ class ComplexExample extends React.Component {
   }
 
   onReorderCountries = (newOrderCountries) => {
+    console.log(newOrderCountries);
     this.setState({
       countries: [...newOrderCountries]
     })
@@ -39,10 +42,11 @@ class ComplexExample extends React.Component {
     })
 
     return (
-      <div className="container">
+      <div id="complex-container" className="container">
         <CountryList
           items={this.state.countries}
           onReorderItem={this.onReorderCountries}
+          scrollContainerId="complex-container"
         />
       </div>
     )

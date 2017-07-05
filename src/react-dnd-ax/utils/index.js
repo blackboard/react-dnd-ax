@@ -1,11 +1,23 @@
-export const moveItem = (itemArray, sourceItem, targetPosition) => {
+export const moveItem = (itemArray, targetPosition, sourceIndex) => {
+
+  const newArray = [
+    ...itemArray.slice(0, sourceIndex),
+    ...itemArray.slice(sourceIndex + 1),
+  ]
+
+  if (targetPosition > sourceIndex) {
+    return [
+      ...newArray.slice(0, targetPosition - 1),
+      itemArray[sourceIndex],
+      ...newArray.slice(targetPosition - 1 ),
+    ]
+  }
+
   return [
-    ...itemArray.slice(0, targetPosition),
-    sourceItem,
-    ...itemArray.slice(targetPosition),
-  ].filter((module, idx) => {
-    return !(module.id === sourceItem.id && idx !== targetPosition)
-  })
+    ...newArray.slice(0, targetPosition),
+    itemArray[sourceIndex],
+    ...newArray.slice(targetPosition),
+  ]
 }
 
 export const omit = (obj, ...keysToOmit) => {
