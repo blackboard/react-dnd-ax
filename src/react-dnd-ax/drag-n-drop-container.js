@@ -6,7 +6,7 @@ import { moveItem } from './utils'
 import { getDisplayName } from './utils'
 
 const SCROLL_RANGE = 150
-const SCROLL_ACC_PX = 5
+const SCROLL_ACC_PX = 10
 
 /* eslint-disable no-restricted-globals */
 

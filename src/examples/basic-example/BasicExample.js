@@ -5,6 +5,7 @@ import {Icon} from 'react-fa'
 import {DragNDropContainer, DragNDropItem} from '../../react-dnd-ax'
 import {basicItems} from '../data'
 
+import '../styles/common.scss'
 import './basic-example.scss'
 
 class BasicExample extends React.Component {
@@ -26,10 +27,10 @@ class BasicExample extends React.Component {
           className="item-row"
           ref={itemRef}
         >
-            {item.text}
+            <span className="text">{item.text}</span>
             <button
               ref={dragPointRef}
-              className="module-table__button drag-point"
+              className="drag-point"
               draggable
               tabIndex="0"
               title="Drag this link to reorder the item"
@@ -42,7 +43,7 @@ class BasicExample extends React.Component {
 
     const BasicList = DragNDropContainer((props) => {
       return (
-        <div className="module-table__body" id="modules-section">
+        <div id="modules-section">
           {
             props.items.map((item, index) => {
               return <BasicItem
@@ -63,10 +64,11 @@ class BasicExample extends React.Component {
     })
 
     return (
-      <div className="container">
+      <div id="basic-container" className="container">
         <BasicList
           items={this.state.items}
           onReorderItem={this.onReorderLinks}
+          scrollContainerId="basic-container"
         />
       </div>
     )
