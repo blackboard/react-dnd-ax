@@ -53,9 +53,9 @@ const DragNDropContainer = (WrappedComponent) => {
       window.addEventListener('dragover', this.setClientY)
 
       window.addEventListener('click', this.leaveKeyboardMoving)
-      this.baseStateContainer = document.getElementById('main-content-inner')
-      setTimeout(() => { // after angular digest for peek panel finished, 'side-panel-content' is available
-        this.peekStateContainer = document.getElementsByClassName('side-panel-content')[0]
+
+      setTimeout(() => {
+        this.scrollContainer = document.getElementById(this.props.scrollContainerId)
       }, 0)
     }
 
@@ -97,27 +97,19 @@ const DragNDropContainer = (WrappedComponent) => {
       // position move is out of control of react render, so we use id instead of ref
       dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
 
-      const {ultraStateType} = this.props
-
       // increase scroll area
       if (this.clientY < SCROLL_RANGE) {
-        if (ultraStateType === 'base' && this.baseStateContainer) {
-          this.baseStateContainer.scrollTop -= SCROLL_ACC_PX
-          return
-        } else if (ultraStateType === 'peek' && this.peekStateContainer) {
-          this.peekStateContainer.scrollTop -= SCROLL_ACC_PX
-          return
+        if (this.scrollContainer) {
+          this.scrollContainer.scrollTop -= SCROLL_ACC_PX
+        } else {
+          scrollBy(0, 0 - SCROLL_ACC_PX)
         }
-        scrollBy(0, 0 - SCROLL_ACC_PX)
       } else if (innerHeight - this.clientY < SCROLL_RANGE) {
-        if (ultraStateType === 'base' && this.baseStateContainer) {
-          this.baseStateContainer.scrollTop += SCROLL_ACC_PX
-          return
-        } else if (ultraStateType === 'peek' && this.peekStateContainer) {
-          this.peekStateContainer.scrollTop += SCROLL_ACC_PX
-          return
+        if (this.scrollContainer) {
+          this.scrollContainer.scrollTop += SCROLL_ACC_PX
+        } else {
+          scrollBy(0, SCROLL_ACC_PX)
         }
-        scrollBy(0, SCROLL_ACC_PX)
       }
     }
 
@@ -179,27 +171,18 @@ const DragNDropContainer = (WrappedComponent) => {
       dragPreviewRef.style.top = `${touchPoint.clientY}px` // eslint-disable-line no-param-reassign
 
       // increase scroll area
-      const {ultraStateType} = this.props
-
-      // increase scroll area
       if (touchPoint.clientY < SCROLL_RANGE) {
-        if (ultraStateType === 'base' && this.baseStateContainer) {
-          this.baseStateContainer.scrollTop -= SCROLL_ACC_PX
-          return
-        } else if (ultraStateType === 'peek' && this.peekStateContainer) {
-          this.peekStateContainer.scrollTop -= SCROLL_ACC_PX
-          return
+        if (this.scrollContainer) {
+          this.scrollContainer.scrollTop -= SCROLL_ACC_PX
+        } else {
+          scrollBy(0, 0 - SCROLL_ACC_PX)
         }
-        scrollBy(0, 0 - SCROLL_ACC_PX)
       } else if (innerHeight - touchPoint.clientY < SCROLL_RANGE) {
-        if (ultraStateType === 'base' && this.baseStateContainer) {
-          this.baseStateContainer.scrollTop += SCROLL_ACC_PX
-          return
-        } else if (ultraStateType === 'peek' && this.peekStateContainer) {
-          this.peekStateContainer.scrollTop += SCROLL_ACC_PX
-          return
+        if (this.scrollContainer) {
+          this.scrollContainer.scrollTop += SCROLL_ACC_PX
+        } else {
+          scrollBy(0, SCROLL_ACC_PX)
         }
-        scrollBy(0, SCROLL_ACC_PX)
       }
     }
 
@@ -288,7 +271,7 @@ const DragNDropContainer = (WrappedComponent) => {
   Wrapper.propTypes = {
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
     onReorderItem: PropTypes.func.isRequired,
-    ultraStateType: PropTypes.string,
+    scrollContainerId: PropTypes.string,
   }
 
   Wrapper.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
