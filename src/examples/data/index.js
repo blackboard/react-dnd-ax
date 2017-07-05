@@ -20,8 +20,8 @@ export const countries = [
         url_suffix: 'Shanghai',
       },
       {
-        name: 'Baoding 保定',
-        url_suffix: 'Baoding',
+        name: 'Zhangjiakou 张家口',
+        url_suffix: 'Zhangjiakou',
       },
       {
         name: 'Nanchang 南昌',
