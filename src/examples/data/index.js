@@ -8,163 +8,139 @@ export const basicItems = Array.from(Array(100).keys()).map((num) => {
 export const countries = [
   {
     name: 'China',
-    bgImg: 'china.jpg',
+    bgImg: 'https://user-images.githubusercontent.com/7331987/27853564-c1827d2c-6195-11e7-906f-65dd50b5c978.jpeg',
     abbr: 'cn',
     cities: [
       {
-        name: 'Shanghai',
+        name: 'Beijing 北京',
+        url_suffix: 'Beijing',
+      },
+      {
+        name: 'Shanghai 上海',
         url_suffix: 'Shanghai',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Baoding 保定',
+        url_suffix: 'Baoding',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
-      },
-      {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
-      },
-      {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Nanchang 南昌',
+        url_suffix: '南昌',
       },
     ]
   },
   {
     name: 'United States',
-    bgImg: 'us.jpg',
+    bgImg: 'https://user-images.githubusercontent.com/7331987/27853668-31ce28b0-6196-11e7-9c39-1b6f3f04f854.jpeg',
     abbr: 'us',
     cities: [
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Washington, D.C.',
+        url_suffix: 'Washington,_D.C.',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Austin',
+        url_suffix: 'Austin,_Texas',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'New York',
+        url_suffix: 'New_York',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
-      },
-      {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Seattle',
+        url_suffix: 'Seattle',
       },
     ]
   },
   {
     name: 'Germany',
-    bgImg: 'germany.jpg',
+    bgImg: 'https://user-images.githubusercontent.com/7331987/27853566-c18461c8-6195-11e7-8f0e-5de089837110.jpeg',
     abbr: 'de',
     cities: [
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Berlin',
+        url_suffix: 'Berlin',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Dresden',
+        url_suffix: 'Dresden',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Munich',
+        url_suffix: 'Munich',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
-      },
-      {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Frankfurt',
+        url_suffix: 'Frankfurt',
       },
     ]
   },
   {
     name: 'United Kingdom',
-    bgImg: 'uk.jpg',
+    bgImg: 'https://user-images.githubusercontent.com/7331987/27853568-c184e40e-6195-11e7-8556-4895e6f541c3.jpeg',
     abbr: 'uk',
     cities: [
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'London',
+        url_suffix: 'London',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Southampton',
+        url_suffix: 'Southampton',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Manchester',
+        url_suffix: 'Manchester',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
-      },
-      {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Swansea',
+        url_suffix: 'Swansea',
       },
     ]
   },
   {
     name: 'New Zealand',
-    bgImg: 'nz.jpg',
+    bgImg: 'https://user-images.githubusercontent.com/7331987/27853569-c1864fba-6195-11e7-837f-bdf8facb3dbe.jpeg',
     abbr: 'nz',
     cities: [
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Wellington',
+        url_suffix: 'Wellington',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Auckland',
+        url_suffix: 'Auckland',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Queenstown',
+        url_suffix: 'Queenstown,_New_Zealand',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
-      },
-      {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Dunedin',
+        url_suffix: 'Dunedin',
       },
     ]
   },
   {
     name: 'Switzerland',
-    bgImg: 'switzerland.jpg',
+    bgImg: 'https://user-images.githubusercontent.com/7331987/27853565-c183d028-6195-11e7-8c23-b13eed47a9fe.jpeg',
     abbr: 'ch',
     cities: [
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Zürich',
+        url_suffix: 'Zürich',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Lucerne',
+        url_suffix: 'Lucerne',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Interlaken',
+        url_suffix: 'Interlaken',
       },
       {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
-      },
-      {
-        name: 'Shanghai',
-        url_suffix: 'Shanghai',
+        name: 'Geneva',
+        url_suffix: 'Geneva',
       },
     ]
   },

@@ -13,7 +13,6 @@ class ComplexExample extends React.Component {
   }
 
   onReorderCountries = (newOrderCountries) => {
-    console.log(newOrderCountries);
     this.setState({
       countries: [...newOrderCountries]
     })

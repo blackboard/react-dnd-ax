@@ -136,7 +136,6 @@ const DragNDropContainer = (WrappedComponent) => {
       const {items} = this.props
       e.preventDefault()
       const newOrderItems = moveItem(items, targetIndex, this.state.sourceIndex)
-      debugger
       const sourceDragItem = items[this.state.sourceIndex]
       this.props.onReorderItem(newOrderItems, sourceDragItem)
     }

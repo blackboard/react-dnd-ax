@@ -1,0 +1,56 @@
+.container {
+  .country-row {
+    position: relative;
+    height: 150px;
+    width: 100%;
+    margin-bottom: 5px;
+
+    .title-bar {
+      display: flex;
+      justify-content: space-around;
+      line-height: 30px;
+    }
+
+    .content-section {
+      height: 120px;
+      display: flex;
+
+      .country-preview {
+        display: inline-block;
+        height: 100%;
+        width: 60%;
+        background-size: cover;
+      }
+
+      .city-list {
+        flex: 1 1;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        border-top: 0.5px solid lightgray;
+        border-bottom: 0.5px solid lightgray;
+
+        .link-item {
+          line-height: 29px;
+          padding: 0 20px;
+          border-bottom: 0.5px solid lightgray;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          &:last-child {
+            border-bottom: none;
+          }
+          .link {
+            text-decoration: none;
+            color: rgba(0, 0, 0, 0.6)
+          }
+        }
+
+
+      }
+
+
+    }
+  }
+}
