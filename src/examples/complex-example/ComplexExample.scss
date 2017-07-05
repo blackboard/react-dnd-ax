@@ -9,6 +9,9 @@
       display: flex;
       justify-content: space-around;
       line-height: 30px;
+      .country-name {
+        font-weight: 500;
+      }
     }
 
     .content-section {
