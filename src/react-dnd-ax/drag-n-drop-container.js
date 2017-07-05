@@ -271,7 +271,7 @@ const DragNDropContainer = (WrappedComponent) => {
 
     render() {
       return (
-        <div id="react-dnd-ax" ref={(ref) => {
+        <div ref={(ref) => {
           this.containerRef = ref
         }}>
           <WrappedComponent

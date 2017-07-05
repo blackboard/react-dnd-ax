@@ -2,8 +2,10 @@ import React from 'react'
 import {Icon} from 'react-fa'
 
 // import {DragNDropContainer, DragNDropItem} from 'test-npm-upload/dist'
-import {DragNDropContainer, DragNDropItem} from '../react-dnd-ax'
-import {basicItems} from './data'
+import {DragNDropContainer, DragNDropItem} from '../../react-dnd-ax'
+import {basicItems} from '../data'
+
+import './basic-example.scss'
 
 class BasicExample extends React.Component {
   state = {

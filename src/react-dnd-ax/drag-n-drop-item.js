@@ -21,8 +21,12 @@ const DragNDropItem = (WrappedComponent) => {
         })
         this.dragPointElem.addEventListener('dragstart', (e) => {
           // hide the default drag preview image
-          e.dataTransfer.setDragImage(document.getElementById('dnd-drag-placeholder'), 0, 0)
-          e.dataTransfer.setData('text/plain', '') // make dnd work in FF
+          // IE and Edge do not have this method
+          e.dataTransfer.setDragImage ? // eslint-disable-line no-unused-expressions
+            e.dataTransfer.setDragImage(document.getElementById('dnd-drag-placeholder'), 0, 0)
+            :
+            ''
+          e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
           actions.onDragStart(e, index)
         })
         this.dragPointElem.addEventListener('dragend', actions.onDragEnd)
