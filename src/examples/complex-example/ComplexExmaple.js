@@ -19,7 +19,6 @@ class ComplexExample extends React.Component {
   }
 
   render() {
-    console.log(this.state.countries);
     const ModuleItem = DragNDropItem(Country)
 
     const CountryList = DragNDropContainer((props) => {
