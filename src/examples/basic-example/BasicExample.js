@@ -1,7 +1,6 @@
 import React from 'react'
 import {Icon} from 'react-fa'
 
-// import {DragNDropContainer, DragNDropItem} from 'test-npm-upload/dist'
 import {DragNDropContainer, DragNDropItem} from '../../react-dnd-ax'
 import {basicItems} from '../data'
 
@@ -20,20 +19,19 @@ class BasicExample extends React.Component {
   }
 
   render() {
-    const BasicItem = DragNDropItem(({item, itemRef, dragPointRef}) => { // improve: should not add itemRef and
-      // dragPointRef here
+    const BasicItem = DragNDropItem(({item, itemRef, dragPointRef}) => {
       return (
         <div
           className="item-row"
-          ref={itemRef}
+          ref={itemRef} // mandatory: put this attribute to the container element of the movable item
         >
             <span className="text">{item.text}</span>
             <button
-              ref={dragPointRef}
+              ref={dragPointRef} // mandatory: put this attribute to the drag handler
               className="drag-point"
-              draggable
-              tabIndex="0"
-              title="Drag this link to reorder the item"
+              draggable // mandatory HTML attribute for drag handler
+              tabIndex="0" // mandatory HTML attribute, make it possible to focus on the drag handler
+              title="Drag this link to reorder the item" // AX title
             >
               <Icon name="arrows"/>
             </button>
@@ -48,14 +46,10 @@ class BasicExample extends React.Component {
             props.items.map((item, index) => {
               return <BasicItem
                 item={item}
-                index={index}
+                index={index} // mandatory: give index to the DragNDropItem HOC
                 key={item.id}
-                preview={
-                  <div>
-                    {item.text}
-                  </div>
-                }
-                {...props}
+                preview={<div>{item.text}</div>} // customize your preview
+                {...props} // mandatory: need to pass down the props
               />
             })
           }
