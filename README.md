@@ -7,6 +7,7 @@ There are many great React Drag and Drop components available on Github. Such as
 ## DEMO
 
 https://artecher.github.io/react-dnd-ax-demo/
+
 As storybook doesn't support mobile view, please visit this site on desktop or create your own project with sources code in this repo locally. We are planning to replace storybook in the future.
 
 ## Features
