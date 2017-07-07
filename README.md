@@ -4,6 +4,10 @@
 
 There are many great React Drag and Drop components available on Github. Such as the first search result you will get on google: [React Dnd](https://github.com/react-dnd/react-dnd). However, to fulfill the requirements of developing a website that requires full accessibility, web and mobile supports, we still need to write our own components. Therefore, we are sharing this HOC, which provides full accessibility support, can work on mobile and desktop applications, and easy to be integrated with your existing react components. 
 
+## DEMO
+
+https://artecher.github.io/react-dnd-ax-demo/
+
 ## Features
 
 * Shipped as High Order Components (HOC) － Which means no pain to be integrated with your existing components
