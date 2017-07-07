@@ -58,8 +58,9 @@ const DragNDropItem = (WrappedComponent) => {
       if (state.isDragging) {
         // only render component around hot zone
         if (nextProps.state.sourceIndex === index ||
-          state.sourceIndex === index ||
-          (index >= (nextProps.state.overIndex - 2) && index <= (nextProps.state.overIndex + 2))) {
+            state.sourceIndex === index ||
+            nextProps.state.lastOverIndex === index || // as drag over does not happen sequentially, we need to render the last over element
+            (index >= (nextProps.state.overIndex - 2) && index <= (nextProps.state.overIndex + 2))) {
           return true
         }
 
@@ -176,7 +177,9 @@ const DragNDropItem = (WrappedComponent) => {
             onDragOver={(e) => {
               actions.onDragOver(e, index)
             }}
-            onDragLeave={actions.onDragLeave}
+            onDragLeave={(e) => {
+              actions.onDragLeave(e, index)
+            }}
           />
           <div
             className={dropDownHalfClass}
@@ -187,7 +190,9 @@ const DragNDropItem = (WrappedComponent) => {
             onDragOver={(e) => {
               actions.onDragOver(e, index + 1)
             }}
-            onDragLeave={actions.onDragLeave}
+            onDragLeave={(e) => {
+              actions.onDragLeave(e, index)
+            }}
           />
           <div className={insertPlaceholderClass}/>
           <div

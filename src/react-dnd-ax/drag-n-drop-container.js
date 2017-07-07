@@ -15,6 +15,7 @@ const DragNDropContainer = (WrappedComponent) => {
     state = {
       isDragging: false,
       sourceIndex: -1,
+      lastOverIndex: -1, // as drag over does not happen sequentially, we need to store last over index and render it when new element is being dragged over
       overIndex: -1,
       isKeyboardMoving: false,
       curPreview: '',
@@ -143,13 +144,15 @@ const DragNDropContainer = (WrappedComponent) => {
     onDragOver = (e, index) => {
       e.preventDefault()
       this.setState({
+        lastOverIndex: index,
         overIndex: index,
       })
     }
 
-    onDragLeave = (e) => {
+    onDragLeave = (e, index) => {
       e.preventDefault()
       this.setState({
+        lastOverIndex: index,
         overIndex: -1,
       })
     }
