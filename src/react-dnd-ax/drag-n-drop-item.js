@@ -162,7 +162,6 @@ const DragNDropItem = (WrappedComponent) => {
                 'actions',
                 'onReorderItem'
               )}
-              onKeyChangeOrder={actions.onKeyChangeOrder}
               dragPointRef={(el) => {
                 this.dragPointElem = el
               }}
