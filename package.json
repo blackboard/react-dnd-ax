@@ -1,6 +1,6 @@
 {
-  "name": "test-npm-upload",
-  "version": "1.0.9",
+  "name": "react-dnd-ax",
+  "version": "1.0.0",
   "description": "React drag and drop HOC with accessibility and keyboard actions support.",
   "main": "dist/commonjs/index.js",
   "jsnext:main": "dist/es6/index.js",
@@ -90,7 +90,7 @@
     "clean:es6": "rimraf dist/es6",
     "clean:commonjs": "rimraf dist/commonjs",
     "npm:css": "cp src/react-dnd-ax/react-dnd-ax.css dist/commonjs && cp src/react-dnd-ax/react-dnd-ax.css dist/es6",
-    "npm:publish": "npm run npm:build && npm version patch && npm publish"
+    "npm:publish": "npm run build && npm version patch && npm publish"
   },
   "jest": {
     "collectCoverageFrom": [
