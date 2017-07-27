@@ -84,6 +84,7 @@
     "npm:build": "npm run build-css && build-script",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "demo:build": "build-storybook -c .storybook -o docs",
+    "demo:build-temp": "build-storybook -c .storybook -o ../react-dnd-ax-demo/docs",
     "test": "node scripts/test.js --env=jsdom",
     "build": "npm run build:commonjs && npm run build:es6 && npm run build:umd && npm run npm:css",
     "build:commonjs": "npm run clean:commonjs && cross-env BABEL_ENV=commonjs babel src/react-dnd-ax --out-dir dist/commonjs --ignore *.example.js,*.test.js",
