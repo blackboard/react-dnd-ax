@@ -6,6 +6,10 @@
   "jsnext:main": "dist/es6/index.js",
   "author": "Ethan Li, Viking Zhang",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blackboard/react-dnd-ax.git"
+  },
   "dependencies": {
     "classnames": "^2.2.5"
   },
@@ -56,6 +60,7 @@
     "promise": "7.1.1",
     "react": "^15.6.1",
     "react-dev-utils": "^3.0.0",
+    "react-dnd-ax": "^1.0.0",
     "react-dom": "^15.6.1",
     "react-error-overlay": "^1.0.7",
     "react-fa": "^4.2.0",
