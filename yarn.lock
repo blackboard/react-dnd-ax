@@ -5715,6 +5715,12 @@ react-dev-utils@^3.0.0, react-dev-utils@^3.0.2:
     strip-ansi "3.0.1"
     text-table "0.2.0"
 
+react-dnd-ax@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-dnd-ax/-/react-dnd-ax-1.0.0.tgz#c5f16b12b9ef8b2e5abf6f150ae8009b2e190094"
+  dependencies:
+    classnames "^2.2.5"
+
 react-docgen@^2.15.0:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/react-docgen/-/react-docgen-2.16.0.tgz#03c9eba935de8031d791ab62657b7b6606ec5da6"
