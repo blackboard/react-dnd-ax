@@ -83,6 +83,30 @@ const DragNDropItem = (WrappedComponent) => {
     }
 
     componentDidUpdate() {
+      const {index, actions, preview} = this.props
+
+      if (this.dragPointElem) {
+        // we need to update index and preview value as we don't recreate dnd-item every time
+        this.dragPointElem.addEventListener('touchstart', (e) => {
+          e.preventDefault()
+          actions.onDragStart(e, index)
+        })
+        this.dragPointElem.addEventListener('dragstart', (e) => {
+          // hide the default drag preview image
+          // IE and Edge do not have this method
+          e.dataTransfer.setDragImage ? // eslint-disable-line no-unused-expressions
+            e.dataTransfer.setDragImage(document.getElementById('dnd-drag-placeholder'), 0, 0)
+            :
+            ''
+          e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
+          actions.onDragStart(e, index)
+        })
+        this.dragPointElem.addEventListener('click', (e) => {
+          e.stopPropagation()
+          actions.onClickDrag(e, index, preview)
+        })
+      }
+
       if (this.firstKeyInsertPlaceHolderRef && this.firstKeyInsertPlaceHolderRef.className.includes('show')) {
         this.firstKeyInsertPlaceHolderRef.focus()
       } else if (this.downKeyInsertPlaceHolderRef.className.includes('show')) {

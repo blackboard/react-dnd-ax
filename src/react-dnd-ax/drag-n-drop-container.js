@@ -225,6 +225,12 @@ const DragNDropContainer = (WrappedComponent) => {
             const newOrderItems = moveItem(items, this.state.keyInsertIndex, this.state.sourceIndex)
             const sourceDragItem = items[this.state.sourceIndex]
             this.props.onReorderItem(newOrderItems, sourceDragItem)
+            this.setState({
+              isKeyboardMoving: false,
+              sourceIndex: -1,
+              keyInsertIndex: -1,
+              curPreview: '',
+            })
             break
           }
           case KeyCode.ARROW_UP: {
