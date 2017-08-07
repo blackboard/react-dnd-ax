@@ -1,6 +1,6 @@
 {
   "name": "react-dnd-ax",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React drag and drop HOC with accessibility and keyboard actions support.",
   "main": "dist/commonjs/index.js",
   "jsnext:main": "dist/es6/index.js",
