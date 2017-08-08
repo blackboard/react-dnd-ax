@@ -1,0 +1,10 @@
+version: '3.1'
+
+services:
+  react-dnd-ax:
+    build: .
+    image: react-dnd-ax
+    container_name: react-dnd-ax
+    command: npm run storybook
+    ports:
+      - "9001:9001"
