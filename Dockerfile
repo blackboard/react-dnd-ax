@@ -4,8 +4,7 @@ WORKDIR /usr/app
 
 COPY package.json .
 
-RUN npm install --quiet && \
-    npm cache clean
+RUN npm install --quiet
 
 COPY . .
 

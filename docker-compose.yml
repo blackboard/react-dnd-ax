@@ -6,5 +6,8 @@ services:
     image: react-dnd-ax
     container_name: react-dnd-ax
     command: npm run storybook
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
     ports:
       - "9001:9001"
