@@ -23,7 +23,7 @@ As storybook doesn't support mobile view, please visit this site on desktop or c
 ```bash
 npm install react-dnd-ax --save
 ```
-Use a module bundler that supports either ES2016 or CommonJS (webpack, Roolup):
+Use a module bundler that supports either ES2016 or CommonJS (webpack, Rollup):
 ```javascript
 //  Compile ES6 with Babel
 import { DragNDropContainer, DragNDropItem } from 'react-dnd-ax'
