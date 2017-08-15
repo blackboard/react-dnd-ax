@@ -282,6 +282,20 @@ npm run storybook
 ```
 then go to http://localhost:9001 in your browser to see examples
 
+#### 如果你安装了Docker，你也可以在Docker中运行例子
+
+```bash
+docker-compose up
+```
+
+#### 停止Docker，并做清理
+
+```bash
+^C
+docker-compose down
+```
+
+
 ### 简单示例
 ```jsx
 import React from 'react'
