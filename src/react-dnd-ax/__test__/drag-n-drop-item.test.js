@@ -63,13 +63,12 @@ describe('Dnd items', () => {
   })
 
   it('should render correct template', () => {
-    // expect(wrapper).toMatchSnapshot()
+    expect(wrapper).toMatchSnapshot()
   })
 
-  it('should call the onClickDrag function when clicking the drag point button', () => {
-    wrapper.find('.drag-point').node.click()
-    // wrapper.find('.drag-point').node.dispatchEvent(new DragEvent('dragstart'))
-    expect(actions.onClickDrag).toHaveBeenCalled()
-    // expect(actions.onDragStart).toHaveBeenCalled()
+  it('should call the onDragOver function when dragover', () => {
+    wrapper.find('.drag-drop-item--drop-down-half').simulate('dragOver')
+    expect(actions.onDragOver).toBeCalled()
+
   })
 })
