@@ -1,8 +1,8 @@
-# React DnD AX 
+# React DnD AX
 
 ## Motivation
 
-There are many great React Drag and Drop components available on Github. Such as the first search result you will get on google: [React Dnd](https://github.com/react-dnd/react-dnd). However, to fulfill the requirements of developing a website that requires full accessibility, web and mobile supports, we still need to write our own components. Therefore, we are sharing this HOC, which provides full accessibility support, can work on mobile and desktop applications, and easy to be integrated with your existing react components. 
+There are many great React Drag and Drop components available on Github. Such as the first search result you will get on google: [React Dnd](https://github.com/react-dnd/react-dnd). However, to fulfill the requirements of developing a website that requires full accessibility, web and mobile supports, we still need to write our own components. Therefore, we are sharing this HOC, which provides full accessibility support, can work on mobile and desktop applications, and easy to be integrated with your existing react components.
 
 ## DEMO
 
@@ -23,7 +23,7 @@ As storybook doesn't support mobile view, please visit this site on desktop or c
 ```bash
 npm install react-dnd-ax --save
 ```
-Use a module bundler that supports either ES2016 or CommonJS (webpack, Roolup): 
+Use a module bundler that supports either ES2016 or CommonJS (webpack, Rollup):
 ```javascript
 //  Compile ES6 with Babel
 import { DragNDropContainer, DragNDropItem } from 'react-dnd-ax'
@@ -56,6 +56,19 @@ npm install
 npm run storybook
 ```
 then go to http://localhost:9001 in your browser to see examples
+
+#### Optionally, run examples in Docker
+
+```bash
+docker-compose up
+```
+
+#### Stop docker examples and clean up
+
+```bash
+^C
+docker-compose down
+```
 
 ### Basic Example
 ```jsx
@@ -199,7 +212,7 @@ export default ComplexExample
 
  Prop | Type | Description
  --- | --- | ---
- index | number | the index value of a single item 
+ index | number | the index value of a single item
  preview | React Element | the preview html element when dragging the movable item
 
 
@@ -209,7 +222,7 @@ export default ComplexExample
  Prop | Type | Description
  --- | --- | ---
  items | Array | the array consists of movable items
- onReorderItem(reorderedItems, sourceDragItem) | Function | the callback function triggered by dropping a movable item 
+ onReorderItem(reorderedItems, sourceDragItem) | Function | the callback function triggered by dropping a movable item
  scrollContainerId | String | the container id of the drag and drop component (usage refer to examples）
 
 
@@ -421,7 +434,5 @@ export default ComplexExample
  属性 | 类型 | 描述
  --- | --- | ---
  items | Array | 由可移动的条目组成的数组
- onReorderItem(reorderedItems, sourceDragItem) | Function | 当条目被移动时被触发的回掉函数 
+ onReorderItem(reorderedItems, sourceDragItem) | Function | 当条目被移动时被触发的回掉函数
  scrollContainerId | String | drag and drop component的container的id （具体用法见示例）
- 
-

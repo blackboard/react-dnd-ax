@@ -7,3 +7,5 @@ src
 .babelrc
 .gitignore
 yarn.lock
+Dockerfile
+docker-compose.yml
