@@ -7,6 +7,25 @@ import './react-dnd-ax.css'
 
 const DragNDropItem = (WrappedComponent) => {
   class Wrapper extends React.Component {
+    havePropsChanged = (nextProps) => {
+      const propagatableProps = {...omit(
+        nextProps,
+        'state',
+        'key',
+        'actions',
+        'onReorderItem',
+        'index'
+      )}
+
+      for (let key of Object.keys(propagatableProps)) {
+        if (propagatableProps[key] !== this.props[key]){
+          return true
+        }
+      }
+
+      return false
+    }
+
     componentDidMount() {
       const {index, actions, preview} = this.props
 
@@ -79,7 +98,7 @@ const DragNDropItem = (WrappedComponent) => {
         }
       }
 
-      return false
+      return this.havePropsChanged(nextProps)
     }
 
     componentDidUpdate() {
