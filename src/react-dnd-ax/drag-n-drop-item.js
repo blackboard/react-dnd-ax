@@ -38,16 +38,7 @@ const DragNDropItem = (WrappedComponent) => {
         this.dragPointElem.addEventListener('drag', (e) => {
           actions.onDrag(e, this.dragPreviewRef)
         })
-        this.dragPointElem.addEventListener('dragstart', (e) => {
-          // hide the default drag preview image
-          // IE and Edge do not have this method
-          e.dataTransfer.setDragImage ? // eslint-disable-line no-unused-expressions
-            e.dataTransfer.setDragImage(document.getElementById('dnd-drag-placeholder'), 0, 0)
-            :
-            ''
-          e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
-          actions.onDragStart(e, index)
-        })
+        this.dragPointElem.addEventListener('dragstart', this.onSetImageDragStart)
         this.dragPointElem.addEventListener('dragend', actions.onDragEnd)
         this.dragPointElem.addEventListener('touchDrop', actions.onTouchDrop)
         this.dragPointElem.addEventListener('touchmove', (e) => {
@@ -110,16 +101,7 @@ const DragNDropItem = (WrappedComponent) => {
           e.preventDefault()
           actions.onDragStart(e, index)
         })
-        this.dragPointElem.addEventListener('dragstart', (e) => {
-          // hide the default drag preview image
-          // IE and Edge do not have this method
-          e.dataTransfer.setDragImage ? // eslint-disable-line no-unused-expressions
-            e.dataTransfer.setDragImage(document.getElementById('dnd-drag-placeholder'), 0, 0)
-            :
-            ''
-          e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
-          actions.onDragStart(e, index)
-        })
+        this.dragPointElem.addEventListener('dragstart', this.onSetImageDragStart)
         this.dragPointElem.addEventListener('click', (e) => {
           e.stopPropagation()
           actions.onClickDrag(e, index, preview)
@@ -136,6 +118,18 @@ const DragNDropItem = (WrappedComponent) => {
       if (this.dragPreviewRef.className.includes('show')) {
         this.dragPreviewRef.style.width = getComputedStyle(this.itemRef).getPropertyValue('width')
       }
+    }
+
+    onSetImageDragStart = (e) => {
+      const { index, actions } = this.props
+      // hide the default drag preview image
+      // IE and Edge do not have this method
+      e.dataTransfer.setDragImage ? // eslint-disable-line no-unused-expressions
+        e.dataTransfer.setDragImage(document.getElementsByClassName('dnd-drag-placeholder')[0], 0, 0)
+        :
+        ''
+      e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
+      actions.onDragStart(e, index)
     }
 
     render() {

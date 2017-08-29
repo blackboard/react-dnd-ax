@@ -39,12 +39,6 @@ const DragNDropContainer = (WrappedComponent) => {
         onKeyChangeOrder: this.onKeyChangeOrder,
       }
 
-      if (!document.getElementById('dnd-drag-placeholder')) {
-        const transparentElem = document.createElement('div')
-        transparentElem.id = 'dnd-drag-placeholder'
-        document.body.appendChild(transparentElem)
-      }
-
       this.clientY = 0
     }
 
@@ -62,11 +56,6 @@ const DragNDropContainer = (WrappedComponent) => {
 
     componentWillUnmount() {
       window.removeEventListener('click', this.leaveKeyboardMoving)
-
-      const transparentElem = document.getElementById('dnd-drag-placeholder')
-      if (transparentElem) {
-        document.body.removeChild(transparentElem)
-      }
     }
 
     // we don't have to render the component for every onDragOver callback
@@ -266,6 +255,7 @@ const DragNDropContainer = (WrappedComponent) => {
         <div ref={(ref) => {
           this.containerRef = ref
         }}>
+          <div className="dnd-drag-placeholder" />
           <WrappedComponent
             {...this.props}
             state={this.state}
