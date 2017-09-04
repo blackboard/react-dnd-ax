@@ -104,11 +104,19 @@ const DragNDropContainer = (WrappedComponent) => {
     }
 
     onDragStart = (e, index) => {
-      this.setState({
-        isDragging: true,
-        sourceIndex: index,
-        overIndex: -1,
-      })
+      /**
+       * Updating state causes the dnd item to re-render thus manipulating the DOM. In some cases
+       * this causes dragend event to fire immediately. To prevent this wrap in a timeout.
+       *
+       * See https://stackoverflow.com/questions/19639969/html5-dragend-event-firing-immediately
+       */
+      setTimeout(() => {
+          this.setState({
+              isDragging: true,
+              sourceIndex: index,
+              overIndex: -1,
+          })
+      });
     }
 
     onDragEnd = (e) => {
