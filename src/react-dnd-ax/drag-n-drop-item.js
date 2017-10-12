@@ -27,13 +27,10 @@ const DragNDropItem = (WrappedComponent) => {
     }
 
     componentDidMount() {
-      const {index, actions, preview} = this.props
+      const {actions} = this.props
 
       if (this.dragPointElem) {
-        this.dragPointElem.addEventListener('touchstart', (e) => {
-          e.preventDefault()
-          actions.onDragStart(e, index)
-        })
+        this.dragPointElem.addEventListener('touchstart', this.onTouchStart)
         this.dragPointElem.addEventListener('touchend', actions.onTouchDrop)
         this.dragPointElem.addEventListener('drag', (e) => {
           actions.onDrag(e, this.dragPreviewRef)
@@ -44,10 +41,7 @@ const DragNDropItem = (WrappedComponent) => {
         this.dragPointElem.addEventListener('touchmove', (e) => {
           actions.onTouchMove(e, this.dragPreviewRef)
         })
-        this.dragPointElem.addEventListener('click', (e) => {
-          e.stopPropagation()
-          actions.onClickDrag(e, index, preview)
-        })
+        this.dragPointElem.addEventListener('click', this.onClick)
         this.itemRef.addEventListener('keydown', actions.onKeyChangeOrder)
       }
     }
@@ -93,19 +87,16 @@ const DragNDropItem = (WrappedComponent) => {
     }
 
     componentDidUpdate() {
-      const {index, actions, preview} = this.props
+      const {actions} = this.props
 
       if (this.dragPointElem) {
         // we need to update index and preview value as we don't recreate dnd-item every time
-        this.dragPointElem.addEventListener('touchstart', (e) => {
-          e.preventDefault()
-          actions.onDragStart(e, index)
-        })
+        this.dragPointElem.removeEventListener('touchStart', this.onTouchStart)
+        this.dragPointElem.addEventListener('touchstart', this.onTouchStart)
+        this.dragPointElem.removeEventListener('dragStart', this.onSetImageDragStart)
         this.dragPointElem.addEventListener('dragstart', this.onSetImageDragStart)
-        this.dragPointElem.addEventListener('click', (e) => {
-          e.stopPropagation()
-          actions.onClickDrag(e, index, preview)
-        })
+        this.dragPointElem.removeEventListener('click', this.onClick)
+        this.dragPointElem.addEventListener('click', this.onClick)
       }
 
       if (this.firstKeyInsertPlaceHolderRef && this.firstKeyInsertPlaceHolderRef.className.includes('show')) {
@@ -130,6 +121,32 @@ const DragNDropItem = (WrappedComponent) => {
         ''
       e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
       actions.onDragStart(e, index)
+    }
+
+    onTouchStart = (e) => {
+        e.preventDefault()
+        actions.onDragStart(e, this.props.index)
+    }
+
+    onClick = (e) => {
+      e.stopPropagation()
+      actions.onClickDrag(e, this.props.index, this.props.preview)
+    }
+
+    onDropNextIndex = (e) => {
+      actions.onDrop(e, this.props.index + 1)
+    }
+    onDragOverNextIndex = (e) => {
+      actions.onDragOver(e, this.props.index  + 1)
+    }
+    onDragLeave = (e) => {
+      actions.onDragLeave(e, this.props.index )
+    }
+    onDragOver = (e) => {
+      actions.onDragOver(e, this.props.index )
+    }
+    onDrop = (e) => {
+      actions.onDop(e, this.props.index )
     }
 
     render() {
@@ -207,28 +224,16 @@ const DragNDropItem = (WrappedComponent) => {
           <div
             className={dropUpHalfClass}
             data-position={index}
-            onDrop={(e) => {
-              actions.onDrop(e, index)
-            }}
-            onDragOver={(e) => {
-              actions.onDragOver(e, index)
-            }}
-            onDragLeave={(e) => {
-              actions.onDragLeave(e, index)
-            }}
+            onDrop={this.onDrop}
+            onDragOver={this.onDragOver}
+            onDragLeave={this.onDragLeave}
           />
           <div
             className={dropDownHalfClass}
             data-position={index + 1}
-            onDrop={(e) => {
-              actions.onDrop(e, index + 1)
-            }}
-            onDragOver={(e) => {
-              actions.onDragOver(e, index + 1)
-            }}
-            onDragLeave={(e) => {
-              actions.onDragLeave(e, index)
-            }}
+            onDrop={this.onDropNextIndex}
+            onDragOver={this.onDragOverNextIndex}
+            onDragLeave={this.onDragLeave}
           />
           <div className={insertPlaceholderClass}/>
           <div

@@ -55,6 +55,7 @@ const DragNDropContainer = (WrappedComponent) => {
     }
 
     componentWillUnmount() {
+      window.removeEventListener('dragover', this.setClientY)
       window.removeEventListener('click', this.leaveKeyboardMoving)
     }
 
