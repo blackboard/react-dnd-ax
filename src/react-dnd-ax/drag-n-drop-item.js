@@ -91,9 +91,9 @@ const DragNDropItem = (WrappedComponent) => {
 
       if (this.dragPointElem) {
         // we need to update index and preview value as we don't recreate dnd-item every time
-        this.dragPointElem.removeEventListener('touchStart', this.onTouchStart)
+        this.dragPointElem.removeEventListener('touchstart', this.onTouchStart)
         this.dragPointElem.addEventListener('touchstart', this.onTouchStart)
-        this.dragPointElem.removeEventListener('dragStart', this.onSetImageDragStart)
+        this.dragPointElem.removeEventListener('dragstart', this.onSetImageDragStart)
         this.dragPointElem.addEventListener('dragstart', this.onSetImageDragStart)
         this.dragPointElem.removeEventListener('click', this.onClick)
         this.dragPointElem.addEventListener('click', this.onClick)
@@ -125,28 +125,42 @@ const DragNDropItem = (WrappedComponent) => {
 
     onTouchStart = (e) => {
         e.preventDefault()
-        actions.onDragStart(e, this.props.index)
+        const { index, actions } = this.props
+
+        actions.onDragStart(e, index)
     }
 
     onClick = (e) => {
       e.stopPropagation()
-      actions.onClickDrag(e, this.props.index, this.props.preview)
+      const { index, actions, preview } = this.props
+
+      actions.onClickDrag(e, index, preview)
     }
 
     onDropNextIndex = (e) => {
-      actions.onDrop(e, this.props.index + 1)
+      const { index, actions } = this.props
+
+      actions.onDrop(e, index + 1)
     }
     onDragOverNextIndex = (e) => {
-      actions.onDragOver(e, this.props.index  + 1)
+      const { index, actions } = this.props
+
+      actions.onDragOver(e, index + 1)
     }
     onDragLeave = (e) => {
-      actions.onDragLeave(e, this.props.index )
+      const { index, actions } = this.props
+
+      actions.onDragLeave(e, index)
     }
     onDragOver = (e) => {
-      actions.onDragOver(e, this.props.index )
+      const { index, actions } = this.props
+
+      actions.onDragOver(e, index)
     }
     onDrop = (e) => {
-      actions.onDop(e, this.props.index )
+      const { index, actions } = this.props
+
+      actions.onDrop(e, index)
     }
 
     render() {
