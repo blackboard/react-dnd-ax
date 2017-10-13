@@ -37,7 +37,6 @@ const DragNDropItem = (WrappedComponent) => {
         })
         this.dragPointElem.addEventListener('dragstart', this.onSetImageDragStart)
         this.dragPointElem.addEventListener('dragend', actions.onDragEnd)
-        this.dragPointElem.addEventListener('touchDrop', actions.onTouchDrop)
         this.dragPointElem.addEventListener('touchmove', (e) => {
           actions.onTouchMove(e, this.dragPreviewRef)
         })
