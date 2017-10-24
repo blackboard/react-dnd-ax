@@ -125,6 +125,7 @@ const DragNDropContainer = (WrappedComponent) => {
         e.preventDefault()
         this.setState({
           isDragging: false,
+          isKeyboardMoving: false,
           sourceIndex: -1,
           overIndex: -1,
         })
