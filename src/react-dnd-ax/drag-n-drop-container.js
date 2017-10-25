@@ -77,6 +77,7 @@ const DragNDropContainer = (WrappedComponent) => {
     leaveKeyboardMoving = () => {
       if (this.state.isKeyboardMoving) {
         this.setState({
+          isDragging: false,
           isKeyboardMoving: false,
           sourceIndex: -1,
           keyInsertIndex: -1,
@@ -114,6 +115,7 @@ const DragNDropContainer = (WrappedComponent) => {
       setTimeout(() => {
           this.setState({
               isDragging: true,
+              isKeyboardMoving: false,
               sourceIndex: index,
               overIndex: -1,
           })
@@ -203,6 +205,7 @@ const DragNDropContainer = (WrappedComponent) => {
     onClickDrag = (e, index, preview) => {
       e.stopPropagation() // as binded a event on window to reset isKeyboardMoving state, need to stop propagation here to avoid mis-triggering it
       this.setState({
+        isDragging: false,
         isKeyboardMoving: true,
         sourceIndex: index,
         keyInsertIndex: index + 1,
