@@ -87,7 +87,9 @@ const DragNDropContainer = (WrappedComponent) => {
 
     onDrag = (e, dragPreviewRef) => {
       // position move is out of control of react render, so we use id instead of ref
-      dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
+      // dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
+       dragPreviewRef.style.top =
+         `${this.clientY - document.querySelector('.assessment-canvas-react').getBoundingClientRect().top}px` // eslint-disable-line
 
       // increase scroll area
       if (this.clientY < SCROLL_RANGE) {
