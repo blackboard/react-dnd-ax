@@ -138,6 +138,7 @@ class BasicExample extends React.Component {
       <div id="basic-container" className="container">
         <BasicList
           items={this.state.items}
+          boundingElementId="container"
           onReorderItem={this.onReorderLinks}
           scrollContainerId="basic-container"
         />
@@ -227,7 +228,7 @@ export default ComplexExample
  items | Array | the array consists of movable items
  onReorderItem(reorderedItems, sourceDragItem) | Function | the callback function triggered by dropping a movable item
  scrollContainerId | String | the container id of the drag and drop component (usage refer to examples）
-
+ boundingElementId | String | Id of anchor element for positioning drag and drop preview item if an ancestor element's styling prevents fixed position (optional)
 
 
 
@@ -364,6 +365,7 @@ class BasicExample extends React.Component {
       <div id="basic-container" className="container">
         <BasicList
           items={this.state.items}
+          boundingElementId="container"
           onReorderItem={this.onReorderLinks}
           scrollContainerId="basic-container"
         />

@@ -30,3 +30,8 @@ export const omit = (obj, ...keysToOmit) => {
 export const getDisplayName = (WrappedComponent) => {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
+
+export const isEdge = () => {
+  // copied from: https://stackoverflow.com/questions/33152523/how-do-i-detect-ie-and-edge-browser
+  return document.documentMode || /Edge/.test(navigator.userAgent);
+}
