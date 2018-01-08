@@ -87,7 +87,12 @@ const DragNDropContainer = (WrappedComponent) => {
 
     onDrag = (e, dragPreviewRef) => {
       // position move is out of control of react render, so we use id instead of ref
-      dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
+      if (this.props.boundingElement) {
+        dragPreviewRef.style.top =
+            `${this.clientY - this.props.boundingElement.getBoundingClientRect().top}px` // eslint-disable-line
+      } else {
+        dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
+      }
 
       // increase scroll area
       if (this.clientY < SCROLL_RANGE) {
@@ -283,6 +288,7 @@ const DragNDropContainer = (WrappedComponent) => {
   Wrapper.propTypes = {
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
     onReorderItem: PropTypes.func.isRequired,
+    boundingElement: PropTypes.object,
     scrollContainerId: PropTypes.string,
   }
 
