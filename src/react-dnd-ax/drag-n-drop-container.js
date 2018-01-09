@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import KeyCode from './consts'
 import { moveItem } from './utils'
-import { getDisplayName } from './utils'
+import { getDisplayName, isEdge } from './utils'
 
 const SCROLL_RANGE = 150
 const SCROLL_ACC_PX = 10
@@ -87,7 +87,15 @@ const DragNDropContainer = (WrappedComponent) => {
 
     onDrag = (e, dragPreviewRef) => {
       // position move is out of control of react render, so we use id instead of ref
-      dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
+      if (this.props.boundingElementId && !isEdge()) {
+        // In some browsers (e.g. Chrome, Safari) the preview item does not get fixed position if an ancestor element uses translateZ
+        // See: https://stackoverflow.com/questions/15194313/transform3d-not-working-with-position-fixed-children
+        // boundingElementId represents an alternate ancestor/container element that can be used to calculate the position while dragging
+        dragPreviewRef.style.top =
+            `${this.clientY - document.getElementById(this.props.boundingElementId).getBoundingClientRect().top}px` // eslint-disable-line
+      } else {
+        dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
+      }
 
       // increase scroll area
       if (this.clientY < SCROLL_RANGE) {
@@ -283,6 +291,7 @@ const DragNDropContainer = (WrappedComponent) => {
   Wrapper.propTypes = {
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
     onReorderItem: PropTypes.func.isRequired,
+    boundingElementId: PropTypes.string,
     scrollContainerId: PropTypes.string,
   }
 

@@ -138,6 +138,7 @@ class BasicExample extends React.Component {
       <div id="basic-container" className="container">
         <BasicList
           items={this.state.items}
+          boundingElementId="container"
           onReorderItem={this.onReorderLinks}
           scrollContainerId="basic-container"
         />
@@ -227,7 +228,7 @@ export default ComplexExample
  items | Array | the array consists of movable items
  onReorderItem(reorderedItems, sourceDragItem) | Function | the callback function triggered by dropping a movable item
  scrollContainerId | String | the container id of the drag and drop component (usage refer to examples）
-
+ boundingElementId | String | Id of anchor element for positioning drag and drop preview item if an ancestor element's styling prevents fixed position (optional)
 
 
 
@@ -364,6 +365,7 @@ class BasicExample extends React.Component {
       <div id="basic-container" className="container">
         <BasicList
           items={this.state.items}
+          boundingElementId="container"
           onReorderItem={this.onReorderLinks}
           scrollContainerId="basic-container"
         />
@@ -453,3 +455,4 @@ export default ComplexExample
  items | Array | 由可移动的条目组成的数组
  onReorderItem(reorderedItems, sourceDragItem) | Function | 当条目被移动时被触发的回掉函数
  scrollContainerId | String | drag and drop component的container的id （具体用法见示例）
+ boundingElementId | String | Id of anchor element for positioning drag and drop preview item if an ancestor element's styling prevents fixed position (可选) 有一些浏览器，如Chrome，当父元素有translateZ(0)样式时，会导致preview item得不到正确的y轴的值。这个参与用于修正这个问题。
