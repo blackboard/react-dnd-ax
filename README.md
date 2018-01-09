@@ -455,3 +455,4 @@ export default ComplexExample
  items | Array | 由可移动的条目组成的数组
  onReorderItem(reorderedItems, sourceDragItem) | Function | 当条目被移动时被触发的回掉函数
  scrollContainerId | String | drag and drop component的container的id （具体用法见示例）
+ boundingElementId | String | Id of anchor element for positioning drag and drop preview item if an ancestor element's styling prevents fixed position (可选) 有一些浏览器，如Chrome，当父元素有translateZ(0)样式时，会导致preview item得不到正确的y轴的值。这个参与用于修正这个问题。
