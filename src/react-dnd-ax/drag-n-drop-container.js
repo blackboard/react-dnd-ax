@@ -286,7 +286,7 @@ const DragNDropContainer = (WrappedComponent) => {
     scrollContainerId: PropTypes.string,
   }
 
-  Wrapper.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+  Wrapper.displayName = `DragNDropContainer(${getDisplayName(WrappedComponent)})`;
 
   return Wrapper
 }

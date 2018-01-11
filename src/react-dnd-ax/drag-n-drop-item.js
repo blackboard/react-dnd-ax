@@ -86,8 +86,6 @@ const DragNDropItem = (WrappedComponent) => {
     }
 
     componentDidUpdate() {
-      const {actions} = this.props
-
       if (this.dragPointElem) {
         // we need to update index and preview value as we don't recreate dnd-item every time
         this.dragPointElem.removeEventListener('touchstart', this.onTouchStart)
@@ -279,7 +277,7 @@ const DragNDropItem = (WrappedComponent) => {
     preview: PropTypes.element.isRequired,
   }
 
-  Wrapper.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+  Wrapper.displayName = `DragNDropItem(${getDisplayName(WrappedComponent)})`;
 
   return Wrapper
 }
