@@ -281,6 +281,8 @@ const DragNDropContainer = (WrappedComponent) => {
             {...this.props}
             state={this.state}
             actions={this.actions}
+            keyInsertIndex={state.keyInsertIndex}
+            isKeyboardMoving={state.isKeyboardMoving}
           />
         </div>
       )
