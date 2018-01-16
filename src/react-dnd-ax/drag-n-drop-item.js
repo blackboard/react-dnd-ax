@@ -41,6 +41,7 @@ const DragNDropItem = (WrappedComponent) => {
           actions.onTouchMove(e, this.dragPreviewRef)
         })
         this.dragPointElem.addEventListener('click', this.onClick)
+        this.dragPointElem.addEventListener('keyup', this.onEnter)
         this.itemRef.addEventListener('keydown', actions.onKeyChangeOrder)
       }
     }
@@ -94,6 +95,8 @@ const DragNDropItem = (WrappedComponent) => {
         this.dragPointElem.addEventListener('dragstart', this.onSetImageDragStart)
         this.dragPointElem.removeEventListener('click', this.onClick)
         this.dragPointElem.addEventListener('click', this.onClick)
+        this.dragPointElem.removeEventListener('keyup', this.onEnter)
+        this.dragPointElem.addEventListener('keyup', this.onEnter)
       }
 
       if (this.firstKeyInsertPlaceHolderRef && this.firstKeyInsertPlaceHolderRef.className.includes('show')) {
@@ -132,6 +135,12 @@ const DragNDropItem = (WrappedComponent) => {
       const { index, actions, preview } = this.props
 
       actions.onClickDrag(e, index, preview)
+    }
+
+    onEnter = (e) => {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+        this.onClick(e);
+      }
     }
 
     onDropNextIndex = (e) => {

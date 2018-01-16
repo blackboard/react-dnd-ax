@@ -60,7 +60,7 @@
     "promise": "7.1.1",
     "react": "15.6.1",
     "react-dev-utils": "3.0.0",
-    "react-dnd-ax": "1.0.5",
+    "react-dnd-ax": "1.0.12",
     "react-dom": "15.6.1",
     "react-error-overlay": "1.0.7",
     "react-fa": "4.2.0",
