@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ClassNames from 'classnames'
+import debounce from 'lodash.debounce';
 import { omit, getDisplayName } from './utils'
 
 import './react-dnd-ax.css'
@@ -9,9 +10,9 @@ const DragNDropItem = (WrappedComponent) => {
   class Wrapper extends React.Component {
     previewWidth = null;
 
-    resetPreviewWidth = () => {
+    resetPreviewWidth = debounce(() => {
         this.previewWidth = null;
-    }
+    })
 
     havePropsChanged = (nextProps) => {
       const propagatableProps = {...omit(
