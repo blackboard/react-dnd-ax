@@ -11,7 +11,8 @@
     "url": "https://github.com/blackboard/react-dnd-ax.git"
   },
   "dependencies": {
-    "classnames": "^2.2.5"
+    "classnames": "^2.2.5",
+    "lodash.debounce": "^4.0.8"
   },
   "peerDependencies": {
     "react": "^15.6.1",
@@ -52,7 +53,6 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.28.0",
     "jest": "20.0.3",
-    "lodash.debounce": "^4.0.8",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "4.0.2",
     "object-assign": "4.1.1",
