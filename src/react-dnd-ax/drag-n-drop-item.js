@@ -1,12 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ClassNames from 'classnames'
+import debounce from 'lodash.debounce';
 import { omit, getDisplayName } from './utils'
 
 import './react-dnd-ax.css'
 
+const RESIZE_DELAY = 300
+
 const DragNDropItem = (WrappedComponent) => {
   class Wrapper extends React.Component {
+    previewWidth = null;
+
+    resetPreviewWidth = debounce(() => {
+        this.previewWidth = null;
+    }, RESIZE_DELAY)
+
     havePropsChanged = (nextProps) => {
       const propagatableProps = {...omit(
         nextProps,
@@ -29,6 +38,8 @@ const DragNDropItem = (WrappedComponent) => {
     componentDidMount() {
       const {actions} = this.props
 
+      window.addEventListener("resize", this.resetPreviewWidth)
+
       if (this.dragPointElem) {
         this.dragPointElem.addEventListener('touchstart', this.onTouchStart)
         this.dragPointElem.addEventListener('touchend', actions.onTouchDrop)
@@ -44,6 +55,10 @@ const DragNDropItem = (WrappedComponent) => {
         this.dragPointElem.addEventListener('keyup', this.onEnter)
         this.itemRef.addEventListener('keydown', actions.onKeyChangeOrder)
       }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.resetPreviewWidth)
     }
 
     // only render necessary components
@@ -106,8 +121,13 @@ const DragNDropItem = (WrappedComponent) => {
       } else if (this.itemRef.className.includes('is-keyboard-moving') && this.itemRef.className.includes('should-on-focus')) {
         this.itemRef.focus()
       }
+
+      if (this.previewWidth == null) {
+          this.previewWidth = getComputedStyle(this.itemRef).getPropertyValue('width')
+      }
+
       if (this.dragPreviewRef.className.includes('show')) {
-        this.dragPreviewRef.style.width = getComputedStyle(this.itemRef).getPropertyValue('width')
+        this.dragPreviewRef.style.width = this.previewWidth
       }
     }
 
