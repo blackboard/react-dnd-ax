@@ -6,13 +6,15 @@ import { omit, getDisplayName } from './utils'
 
 import './react-dnd-ax.css'
 
+const RESIZE_DELAY = 300
+
 const DragNDropItem = (WrappedComponent) => {
   class Wrapper extends React.Component {
     previewWidth = null;
 
     resetPreviewWidth = debounce(() => {
         this.previewWidth = null;
-    })
+    }, RESIZE_DELAY)
 
     havePropsChanged = (nextProps) => {
       const propagatableProps = {...omit(
