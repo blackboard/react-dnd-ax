@@ -19,6 +19,7 @@ class Country extends React.Component {
         <div className="title-bar">
           <span className="country-name">{country.name}</span>
           <div
+            role="button"
             ref={dragPointRef}
             className="drag-point"
             draggable
