@@ -4,8 +4,8 @@ import {Icon} from 'react-fa'
 import {DragNDropContainer, DragNDropItem} from 'react-dnd-ax'
 import {basicItems} from '../data'
 
-import '../styles/common.scss'
-import './basic-example.scss'
+import '../styles/common.css'
+import './basic-example.css'
 
 class BasicExample extends React.Component {
   state = {

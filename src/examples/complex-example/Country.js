@@ -18,7 +18,7 @@ class Country extends React.Component {
       <div className="country-row">
         <div className="title-bar">
           <span className="country-name">{country.name}</span>
-          <button
+          <div
             ref={dragPointRef}
             className="drag-point"
             draggable
@@ -26,7 +26,7 @@ class Country extends React.Component {
             title="Move country"
           >
             <Icon name="arrows"/>
-          </button>
+          </div>
         </div>
         <div className="content-section">
           <div className="country-preview" style={{backgroundImage: `url(${country.bgImg})`}}  />
