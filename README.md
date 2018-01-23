@@ -1,8 +1,11 @@
-# React DnD AX 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/blackboard/react-dnd-ax/blob/master/LICENSE)
+
+
+# React DnD AX
 
 ## Motivation
 
-There are many great React Drag and Drop components available on Github. Such as the first search result you will get on google: [React Dnd](https://github.com/react-dnd/react-dnd). However, to fulfill the requirements of developing a website that requires full accessibility, web and mobile supports, we still need to write our own components. Therefore, we are sharing this HOC, which provides full accessibility support, can work on mobile and desktop applications, and easy to be integrated with your existing react components. 
+There are many great React Drag and Drop components available on Github. Such as the first search result you will get on google: [React Dnd](https://github.com/react-dnd/react-dnd). However, to fulfill the requirements of developing a website that requires full accessibility, web and mobile supports, we still need to write our own components. Therefore, we are sharing this HOC, which provides full accessibility support, can work on mobile and desktop applications, and easy to be integrated with your existing react components.
 
 ## DEMO
 
@@ -31,7 +34,7 @@ If you wanna see the Complex Example, go to src/index.js, comment line 4-5, and 
 ```bash
 npm install react-dnd-ax --save
 ```
-Use a module bundler that supports either ES2016 or CommonJS (webpack, Roolup): 
+Use a module bundler that supports either ES2016 or CommonJS (webpack, Rollup):
 ```javascript
 //  Compile ES6 with Babel
 import { DragNDropContainer, DragNDropItem } from 'react-dnd-ax'
@@ -64,6 +67,19 @@ npm install
 npm run storybook
 ```
 then go to http://localhost:9001 in your browser to see examples
+
+#### Optionally, run examples in Docker
+
+```bash
+docker-compose up
+```
+
+#### Stop docker examples and clean up
+
+```bash
+^C
+docker-compose down
+```
 
 ### Basic Example
 ```jsx
@@ -130,6 +146,7 @@ class BasicExample extends React.Component {
       <div id="basic-container" className="container">
         <BasicList
           items={this.state.items}
+          boundingElementId="container"
           onReorderItem={this.onReorderLinks}
           scrollContainerId="basic-container"
         />
@@ -207,7 +224,7 @@ export default ComplexExample
 
  Prop | Type | Description
  --- | --- | ---
- index | number | the index value of a single item 
+ index | number | the index value of a single item
  preview | React Element | the preview html element when dragging the movable item
 
 
@@ -217,9 +234,9 @@ export default ComplexExample
  Prop | Type | Description
  --- | --- | ---
  items | Array | the array consists of movable items
- onReorderItem(reorderedItems, sourceDragItem) | Function | the callback function triggered by dropping a movable item 
+ onReorderItem(reorderedItems, sourceDragItem) | Function | the callback function triggered by dropping a movable item
  scrollContainerId | String | the container id of the drag and drop component (usage refer to examples）
-
+ boundingElementId | String | Id of anchor element for positioning drag and drop preview item if an ancestor element's styling prevents fixed position (optional)
 
 
 
@@ -276,6 +293,20 @@ npm install
 npm run storybook
 ```
 then go to http://localhost:9001 in your browser to see examples
+
+#### 如果你安装了Docker，你也可以在Docker中运行例子
+
+```bash
+docker-compose up
+```
+
+#### 停止Docker，并做清理
+
+```bash
+^C
+docker-compose down
+```
+
 
 ### 简单示例
 ```jsx
@@ -342,6 +373,7 @@ class BasicExample extends React.Component {
       <div id="basic-container" className="container">
         <BasicList
           items={this.state.items}
+          boundingElementId="container"
           onReorderItem={this.onReorderLinks}
           scrollContainerId="basic-container"
         />
@@ -429,7 +461,6 @@ export default ComplexExample
  属性 | 类型 | 描述
  --- | --- | ---
  items | Array | 由可移动的条目组成的数组
- onReorderItem(reorderedItems, sourceDragItem) | Function | 当条目被移动时被触发的回掉函数 
+ onReorderItem(reorderedItems, sourceDragItem) | Function | 当条目被移动时被触发的回掉函数
  scrollContainerId | String | drag and drop component的container的id （具体用法见示例）
- 
-
+ boundingElementId | String | Id of anchor element for positioning drag and drop preview item if an ancestor element's styling prevents fixed position (可选) 有一些浏览器，如Chrome，当父元素有translateZ(0)样式时，会导致preview item得不到正确的y轴的值。这个参与用于修正这个问题。

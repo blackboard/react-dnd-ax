@@ -1,45 +1,64 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ClassNames from 'classnames'
+import debounce from 'lodash.debounce';
 import { omit, getDisplayName } from './utils'
 
 import './react-dnd-ax.css'
 
+const RESIZE_DELAY = 300
+
 const DragNDropItem = (WrappedComponent) => {
   class Wrapper extends React.Component {
+    previewWidth = null;
+
+    resetPreviewWidth = debounce(() => {
+        this.previewWidth = null;
+    }, RESIZE_DELAY)
+
+    havePropsChanged = (nextProps) => {
+      const propagatableProps = {...omit(
+        nextProps,
+        'state',
+        'key',
+        'actions',
+        'onReorderItem',
+        'index'
+      )}
+
+      for (let key of Object.keys(propagatableProps)) {
+        if (propagatableProps[key] !== this.props[key]){
+          return true
+        }
+      }
+
+      return false
+    }
+
     componentDidMount() {
-      const {index, actions, preview} = this.props
+      const {actions} = this.props
+
+      window.addEventListener("resize", this.resetPreviewWidth)
 
       if (this.dragPointElem) {
-        this.dragPointElem.addEventListener('touchstart', (e) => {
-          e.preventDefault()
-          actions.onDragStart(e, index)
-        })
+        this.dragPointElem.addEventListener('touchstart', this.onTouchStart)
         this.dragPointElem.addEventListener('touchend', actions.onTouchDrop)
         this.dragPointElem.addEventListener('drag', (e) => {
           actions.onDrag(e, this.dragPreviewRef)
         })
-        this.dragPointElem.addEventListener('dragstart', (e) => {
-          // hide the default drag preview image
-          // IE and Edge do not have this method
-          e.dataTransfer.setDragImage ? // eslint-disable-line no-unused-expressions
-            e.dataTransfer.setDragImage(document.getElementById('dnd-drag-placeholder'), 0, 0)
-            :
-            ''
-          e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
-          actions.onDragStart(e, index)
-        })
+        this.dragPointElem.addEventListener('dragstart', this.onSetImageDragStart)
         this.dragPointElem.addEventListener('dragend', actions.onDragEnd)
-        this.dragPointElem.addEventListener('touchDrop', actions.onTouchDrop)
         this.dragPointElem.addEventListener('touchmove', (e) => {
           actions.onTouchMove(e, this.dragPreviewRef)
         })
-        this.dragPointElem.addEventListener('click', (e) => {
-          e.stopPropagation()
-          actions.onClickDrag(e, index, preview)
-        })
+        this.dragPointElem.addEventListener('click', this.onClick)
+        this.dragPointElem.addEventListener('keyup', this.onEnter)
         this.itemRef.addEventListener('keydown', actions.onKeyChangeOrder)
       }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.resetPreviewWidth)
     }
 
     // only render necessary components
@@ -79,32 +98,20 @@ const DragNDropItem = (WrappedComponent) => {
         }
       }
 
-      return false
+      return this.havePropsChanged(nextProps)
     }
 
     componentDidUpdate() {
-      const {index, actions, preview} = this.props
-
       if (this.dragPointElem) {
         // we need to update index and preview value as we don't recreate dnd-item every time
-        this.dragPointElem.addEventListener('touchstart', (e) => {
-          e.preventDefault()
-          actions.onDragStart(e, index)
-        })
-        this.dragPointElem.addEventListener('dragstart', (e) => {
-          // hide the default drag preview image
-          // IE and Edge do not have this method
-          e.dataTransfer.setDragImage ? // eslint-disable-line no-unused-expressions
-            e.dataTransfer.setDragImage(document.getElementById('dnd-drag-placeholder'), 0, 0)
-            :
-            ''
-          e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
-          actions.onDragStart(e, index)
-        })
-        this.dragPointElem.addEventListener('click', (e) => {
-          e.stopPropagation()
-          actions.onClickDrag(e, index, preview)
-        })
+        this.dragPointElem.removeEventListener('touchstart', this.onTouchStart)
+        this.dragPointElem.addEventListener('touchstart', this.onTouchStart)
+        this.dragPointElem.removeEventListener('dragstart', this.onSetImageDragStart)
+        this.dragPointElem.addEventListener('dragstart', this.onSetImageDragStart)
+        this.dragPointElem.removeEventListener('click', this.onClick)
+        this.dragPointElem.addEventListener('click', this.onClick)
+        this.dragPointElem.removeEventListener('keyup', this.onEnter)
+        this.dragPointElem.addEventListener('keyup', this.onEnter)
       }
 
       if (this.firstKeyInsertPlaceHolderRef && this.firstKeyInsertPlaceHolderRef.className.includes('show')) {
@@ -114,9 +121,72 @@ const DragNDropItem = (WrappedComponent) => {
       } else if (this.itemRef.className.includes('is-keyboard-moving') && this.itemRef.className.includes('should-on-focus')) {
         this.itemRef.focus()
       }
-      if (this.dragPreviewRef.className.includes('show')) {
-        this.dragPreviewRef.style.width = getComputedStyle(this.itemRef).getPropertyValue('width')
+
+      if (this.previewWidth == null) {
+          this.previewWidth = getComputedStyle(this.itemRef).getPropertyValue('width')
       }
+
+      if (this.dragPreviewRef.className.includes('show')) {
+        this.dragPreviewRef.style.width = this.previewWidth
+      }
+    }
+
+    onSetImageDragStart = (e) => {
+      const { index, actions } = this.props
+      // hide the default drag preview image
+      // IE and Edge do not have this method
+      e.dataTransfer.setDragImage ? // eslint-disable-line no-unused-expressions
+        e.dataTransfer.setDragImage(document.getElementsByClassName('dnd-drag-placeholder')[0], 0, 0)
+        :
+        ''
+      e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
+      actions.onDragStart(e, index)
+    }
+
+    onTouchStart = (e) => {
+        e.preventDefault()
+        const { index, actions } = this.props
+
+        actions.onDragStart(e, index)
+    }
+
+    onClick = (e) => {
+      e.stopPropagation()
+      const { index, actions, preview } = this.props
+
+      actions.onClickDrag(e, index, preview)
+    }
+
+    onEnter = (e) => {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+        this.onClick(e);
+      }
+    }
+
+    onDropNextIndex = (e) => {
+      const { index, actions } = this.props
+
+      actions.onDrop(e, index + 1)
+    }
+    onDragOverNextIndex = (e) => {
+      const { index, actions } = this.props
+
+      actions.onDragOver(e, index + 1)
+    }
+    onDragLeave = (e) => {
+      const { index, actions } = this.props
+
+      actions.onDragLeave(e, index)
+    }
+    onDragOver = (e) => {
+      const { index, actions } = this.props
+
+      actions.onDragOver(e, index)
+    }
+    onDrop = (e) => {
+      const { index, actions } = this.props
+
+      actions.onDrop(e, index)
     }
 
     render() {
@@ -194,28 +264,16 @@ const DragNDropItem = (WrappedComponent) => {
           <div
             className={dropUpHalfClass}
             data-position={index}
-            onDrop={(e) => {
-              actions.onDrop(e, index)
-            }}
-            onDragOver={(e) => {
-              actions.onDragOver(e, index)
-            }}
-            onDragLeave={(e) => {
-              actions.onDragLeave(e, index)
-            }}
+            onDrop={this.onDrop}
+            onDragOver={this.onDragOver}
+            onDragLeave={this.onDragLeave}
           />
           <div
             className={dropDownHalfClass}
             data-position={index + 1}
-            onDrop={(e) => {
-              actions.onDrop(e, index + 1)
-            }}
-            onDragOver={(e) => {
-              actions.onDragOver(e, index + 1)
-            }}
-            onDragLeave={(e) => {
-              actions.onDragLeave(e, index)
-            }}
+            onDrop={this.onDropNextIndex}
+            onDragOver={this.onDragOverNextIndex}
+            onDragLeave={this.onDragLeave}
           />
           <div className={insertPlaceholderClass}/>
           <div
@@ -248,7 +306,7 @@ const DragNDropItem = (WrappedComponent) => {
     preview: PropTypes.element.isRequired,
   }
 
-  Wrapper.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+  Wrapper.displayName = `DragNDropItem(${getDisplayName(WrappedComponent)})`;
 
   return Wrapper
 }

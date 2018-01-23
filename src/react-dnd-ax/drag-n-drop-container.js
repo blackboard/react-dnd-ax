@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import KeyCode from './consts'
 import { moveItem } from './utils'
-import { getDisplayName } from './utils'
+import { getDisplayName, isEdge } from './utils'
 
 const SCROLL_RANGE = 150
 const SCROLL_ACC_PX = 10
@@ -39,12 +39,6 @@ const DragNDropContainer = (WrappedComponent) => {
         onKeyChangeOrder: this.onKeyChangeOrder,
       }
 
-      if (!document.getElementById('dnd-drag-placeholder')) {
-        const transparentElem = document.createElement('div')
-        transparentElem.id = 'dnd-drag-placeholder'
-        document.body.appendChild(transparentElem)
-      }
-
       this.clientY = 0
     }
 
@@ -61,12 +55,8 @@ const DragNDropContainer = (WrappedComponent) => {
     }
 
     componentWillUnmount() {
+      window.removeEventListener('dragover', this.setClientY)
       window.removeEventListener('click', this.leaveKeyboardMoving)
-
-      const transparentElem = document.getElementById('dnd-drag-placeholder')
-      if (transparentElem) {
-        document.body.removeChild(transparentElem)
-      }
     }
 
     // we don't have to render the component for every onDragOver callback
@@ -87,6 +77,7 @@ const DragNDropContainer = (WrappedComponent) => {
     leaveKeyboardMoving = () => {
       if (this.state.isKeyboardMoving) {
         this.setState({
+          isDragging: false,
           isKeyboardMoving: false,
           sourceIndex: -1,
           keyInsertIndex: -1,
@@ -96,7 +87,15 @@ const DragNDropContainer = (WrappedComponent) => {
 
     onDrag = (e, dragPreviewRef) => {
       // position move is out of control of react render, so we use id instead of ref
-      dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
+      if (this.props.boundingElementId && !isEdge()) {
+        // In some browsers (e.g. Chrome, Safari) the preview item does not get fixed position if an ancestor element uses translateZ
+        // See: https://stackoverflow.com/questions/15194313/transform3d-not-working-with-position-fixed-children
+        // boundingElementId represents an alternate ancestor/container element that can be used to calculate the position while dragging
+        dragPreviewRef.style.top =
+            `${this.clientY - document.getElementById(this.props.boundingElementId).getBoundingClientRect().top}px` // eslint-disable-line
+      } else {
+        dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
+      }
 
       // increase scroll area
       if (this.clientY < SCROLL_RANGE) {
@@ -115,11 +114,20 @@ const DragNDropContainer = (WrappedComponent) => {
     }
 
     onDragStart = (e, index) => {
-      this.setState({
-        isDragging: true,
-        sourceIndex: index,
-        overIndex: -1,
-      })
+      /**
+       * Updating state causes the dnd item to re-render thus manipulating the DOM. In some cases
+       * this causes dragend event to fire immediately. To prevent this wrap in a timeout.
+       *
+       * See https://stackoverflow.com/questions/19639969/html5-dragend-event-firing-immediately
+       */
+      setTimeout(() => {
+          this.setState({
+              isDragging: true,
+              isKeyboardMoving: false,
+              sourceIndex: index,
+              overIndex: -1,
+          })
+      });
     }
 
     onDragEnd = (e) => {
@@ -127,6 +135,7 @@ const DragNDropContainer = (WrappedComponent) => {
         e.preventDefault()
         this.setState({
           isDragging: false,
+          isKeyboardMoving: false,
           sourceIndex: -1,
           overIndex: -1,
         })
@@ -204,6 +213,7 @@ const DragNDropContainer = (WrappedComponent) => {
     onClickDrag = (e, index, preview) => {
       e.stopPropagation() // as binded a event on window to reset isKeyboardMoving state, need to stop propagation here to avoid mis-triggering it
       this.setState({
+        isDragging: false,
         isKeyboardMoving: true,
         sourceIndex: index,
         keyInsertIndex: index + 1,
@@ -266,10 +276,13 @@ const DragNDropContainer = (WrappedComponent) => {
         <div ref={(ref) => {
           this.containerRef = ref
         }}>
+          <div className="dnd-drag-placeholder" />
           <WrappedComponent
             {...this.props}
             state={this.state}
             actions={this.actions}
+            keyInsertIndex={this.state.keyInsertIndex}
+            isKeyboardMoving={this.state.isKeyboardMoving}
           />
         </div>
       )
@@ -280,10 +293,11 @@ const DragNDropContainer = (WrappedComponent) => {
   Wrapper.propTypes = {
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
     onReorderItem: PropTypes.func.isRequired,
+    boundingElementId: PropTypes.string,
     scrollContainerId: PropTypes.string,
   }
 
-  Wrapper.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+  Wrapper.displayName = `DragNDropContainer(${getDisplayName(WrappedComponent)})`;
 
   return Wrapper
 }

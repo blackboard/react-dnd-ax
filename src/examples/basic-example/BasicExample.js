@@ -26,15 +26,16 @@ class BasicExample extends React.Component {
           ref={itemRef} // mandatory: put this attribute to the container element of the movable item
         >
             <span className="text">{item.text}</span>
-            <button
+            <div // mandatory if supporting FireFox. FireFox does not support dragstart event on buttons.
               ref={dragPointRef} // mandatory: put this attribute to the drag handler
               className="drag-point"
               draggable // mandatory HTML attribute for drag handler
               tabIndex="0" // mandatory HTML attribute, make it possible to focus on the drag handler
               title="Drag this link to reorder the item" // AX title
+              role="button" // mandatory if element is not a button
             >
               <Icon name="arrows"/>
-            </button>
+            </div>
         </div>
       )
     })
