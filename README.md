@@ -13,6 +13,14 @@ https://artecher.github.io/react-dnd-ax-demo/
 
 As storybook doesn't support mobile view, please visit this site on desktop or create your own project with sources code in this repo locally. We are planning to replace storybook in the future.
 
+**Run demo locally**
+
+```bash
+npm install && npm start
+```
+The browser will open automaticly and navigate to localhost:3000/
+If you wanna see the Complex Example, go to src/index.js, comment line 4-5, and uncomment line 7-8
+
 ## Features
 
 * Shipped as High Order Components (HOC) － Which means no pain to be integrated with your existing components

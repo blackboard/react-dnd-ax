@@ -4,8 +4,8 @@ import { DragNDropContainer, DragNDropItem } from 'react-dnd-ax'
 import { countries } from '../data'
 import Country from './Country'
 
-import '../styles/common.scss'
-import './ComplexExample.scss'
+import '../styles/common.css'
+import './ComplexExample.css'
 
 class ComplexExample extends React.Component {
   state = {
