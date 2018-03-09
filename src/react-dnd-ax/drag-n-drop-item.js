@@ -72,21 +72,12 @@ const DragNDropItem = (WrappedComponent) => {
 
       if (state.isDragging) {
         // only render component around hot zone
-        if (nextProps.state.sourceIndex === index ||
+        return (nextProps.state.sourceIndex === index ||
             state.sourceIndex === index ||
-            nextProps.state.lastOverIndex === index || // as drag over does not happen sequentially, we need to render the last over element
-            (index >= (nextProps.state.overIndex - 2) && index <= (nextProps.state.overIndex + 2))) {
-          return true
-        }
-
-        // when hovering on dragging element
-        if (nextProps.state.overIndex === -1 && nextProps.state.overIndex !== state.overIndex) {
-          if (index >= state.sourceIndex - 2 && index <= state.sourceIndex + 1) {
-            return true
-          }
-        }
-
-        return false
+            nextProps.state.lastOverIndex === index ||  // as drag over does not happen sequentially, we need to render the last over element
+            nextProps.state.overIndex === -1 ||         // when hovering on dragging element
+            nextProps.state.overIndex !== state.overIndex
+          )
       }
 
       // only render source and destination item
