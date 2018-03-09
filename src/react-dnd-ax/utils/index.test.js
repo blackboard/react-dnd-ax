@@ -15,7 +15,7 @@ describe('moveItem', () => {
 
   it('should return the correct array when targetPosition is bigger than sourceIndex', () => {
     const before = [{id: 1}, {id: 2, name: 'foo'}, {id: 3}, {id: 4}, {id: 5}]
-    const after = [{id: 1}, {id: 3}, {id: 2, name: 'foo'}, {id: 4}, {id: 5}]
+    const after = [{id: 1}, {id: 3}, {id: 4}, {id: 2, name: 'foo'}, {id: 5}]
     expect(moveItem(before, 3, 1)).toEqual(after)
   })
 })
