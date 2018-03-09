@@ -119,7 +119,7 @@ const DragNDropItem = (WrappedComponent) => {
           this.previewWidth = getComputedStyle(this.itemRef).getPropertyValue('width')
       }
 
-      if (this.dragPreviewRef.className.includes('show')) {
+      if (this.dragPreviewRef && this.dragPreviewRef.style && this.dragPreviewRef.className && this.dragPreviewRef.className.includes('show')) {
         this.dragPreviewRef.style.width = this.previewWidth
       }
     }
@@ -165,8 +165,8 @@ const DragNDropItem = (WrappedComponent) => {
       actions.onDragOver(e, index + 1)
     }
     onDragLeave = (e) => {
-      const { index, actions } = this.props
-      actions.onDragLeave(e, index)
+      const { actions } = this.props
+      actions.onDragLeave(e)
     }
     onDragOver = (e) => {
       const { index, actions } = this.props

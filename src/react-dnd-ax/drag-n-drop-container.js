@@ -87,14 +87,16 @@ const DragNDropContainer = (WrappedComponent) => {
 
     onDrag = (e, dragPreviewRef) => {
       // position move is out of control of react render, so we use id instead of ref
-      if (this.props.boundingElementId && !isEdge()) {
-        // In some browsers (e.g. Chrome, Safari) the preview item does not get fixed position if an ancestor element uses translateZ
-        // See: https://stackoverflow.com/questions/15194313/transform3d-not-working-with-position-fixed-children
-        // boundingElementId represents an alternate ancestor/container element that can be used to calculate the position while dragging
-        dragPreviewRef.style.top =
-            `${this.clientY - document.getElementById(this.props.boundingElementId).getBoundingClientRect().top}px` // eslint-disable-line
-      } else {
-        dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
+      if (dragPreviewRef && dragPreviewRef.style) {
+        if (this.props.boundingElementId && !isEdge()) {
+          // In some browsers (e.g. Chrome, Safari) the preview item does not get fixed position if an ancestor element uses translateZ
+          // See: https://stackoverflow.com/questions/15194313/transform3d-not-working-with-position-fixed-children
+          // boundingElementId represents an alternate ancestor/container element that can be used to calculate the position while dragging
+          dragPreviewRef.style.top =
+              `${this.clientY - document.getElementById(this.props.boundingElementId).getBoundingClientRect().top}px` // eslint-disable-line
+        } else {
+          dragPreviewRef.style.top = `${this.clientY}px` // eslint-disable-line no-param-reassign
+        }
       }
 
       // increase scroll area
@@ -147,7 +149,7 @@ const DragNDropContainer = (WrappedComponent) => {
       e.preventDefault()
 
       // account for inserting later in the list, since the dropped item won't be there
-      const adjustedTargetIndex = this.state.sourceIndex > targetIndex ? targetIndex : targetIndex - 1;
+      const adjustedTargetIndex = this.state.sourceIndex >= targetIndex ? targetIndex : targetIndex - 1;
       const newOrderItems = moveItem(items, adjustedTargetIndex, this.state.sourceIndex)
       const sourceDragItem = items[this.state.sourceIndex]
       this.props.onReorderItem(newOrderItems, sourceDragItem)
@@ -155,6 +157,7 @@ const DragNDropContainer = (WrappedComponent) => {
 
     onDragOver = (e, index) => {
       e.preventDefault()
+
       let newOver = index;
       if ((index === (this.state.sourceIndex)) || (index === (this.state.sourceIndex + 1))) {
         newOver = -1;
@@ -165,14 +168,15 @@ const DragNDropContainer = (WrappedComponent) => {
       })
     }
 
-    onDragLeave = (e, index) => {
+    onDragLeave = (e) => {
       e.preventDefault()
+
       const currentPosition = e.target.dataset.position;
       if (this.state.lastOverIndex !== currentPosition &&
           (this.state.sourceIndex !== currentPosition ||
             (this.state.sourceIndex + 1) !== currentPosition)) {
         this.setState({
-          lastOverIndex: e.target.dataset.position,
+          lastOverIndex: currentPosition,
           overIndex: -1,
         })
       }
@@ -180,19 +184,26 @@ const DragNDropContainer = (WrappedComponent) => {
 
     onTouchMove = (e, dragPreviewRef) => {
       const touchPoint = e.touches[0]
-      const dropZone = document.elementFromPoint(touchPoint.clientX, touchPoint.clientY)
-      const position = dropZone.dataset.position
 
-      if (position) {
+      const dropZone = document.elementFromPoint(touchPoint.clientX, touchPoint.clientY)
+      if (dropZone && dropZone.dataset && dropZone.dataset.position) {
+        const index = parseInt(dropZone.dataset.position, 10);
+        let newOver = index;
+        if ((index === (this.state.sourceIndex)) || (index === (this.state.sourceIndex + 1))) {
+          newOver = -1;
+        }
         this.setState({
-          overIndex: parseInt(position, 10),
+          lastOverIndex: index,
+          overIndex: newOver,
         })
       } else {
         this.onDragLeave(e)
       }
 
       // position move is out of control of react render, so we use id instead of ref
-      dragPreviewRef.style.top = `${touchPoint.clientY}px` // eslint-disable-line no-param-reassign
+      if (dragPreviewRef && dragPreviewRef.style) {
+        dragPreviewRef.style.top = `${touchPoint.clientY}px` // eslint-disable-line no-param-reassign
+      }
 
       // increase scroll area
       if (touchPoint.clientY < SCROLL_RANGE) {
@@ -212,14 +223,12 @@ const DragNDropContainer = (WrappedComponent) => {
 
     onTouchDrop = (e) => {
       const touchPoint = e.changedTouches[0]
+
       const dropZone = document.elementFromPoint(touchPoint.clientX, touchPoint.clientY)
-      const position = dropZone.dataset.position
-      if (position) {
-        this.onDrop(e, parseInt(position, 10))
-        this.onDragEnd(e)
-      } else {
-        this.onDragEnd(e)
+      if (dropZone && dropZone.dataset && dropZone.dataset.position) {
+        this.onDrop(e, parseInt(dropZone.dataset.position, 10))
       }
+      this.onDragEnd(e)
     }
 
     onClickDrag = (e, index, preview) => {
