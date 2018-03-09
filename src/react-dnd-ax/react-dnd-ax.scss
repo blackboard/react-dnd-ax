@@ -1,4 +1,5 @@
 $primary-accent-color-light: #c56fd5;
+$placeholder-height: 20px;
 
 .module-section {
     position: relative;
@@ -29,10 +30,6 @@ $primary-accent-color-light: #c56fd5;
         }
     }
 
-    .drop-down-half.show {
-        height: calc(50% + 20px) // cover the expanded gap
-    }
-
     .drop-up-half {
         top: 0;
     }
@@ -47,7 +44,16 @@ $primary-accent-color-light: #c56fd5;
         height: 0;
         background-color: rgba($primary-accent-color-light, 0.25);
         &.show {
-            height: 20px; // expanded gap
+            height: $placeholder-height; // expanded gap
+
+            & ~ .drop-down-half.show {
+                top: calc(50% - #{$placeholder-height * 0.5});
+                height: calc(50% + #{$placeholder-height * 1.5});
+
+                & ~ .drop-up-half {
+                    height: calc(50% - #{$placeholder-height * 0.5});
+                }
+            }
         }
     }
 
@@ -81,7 +87,6 @@ $primary-accent-color-light: #c56fd5;
             display: block;
         }
     }
-
 }
 
 .dnd-drag-placeholder {

@@ -64,7 +64,7 @@ const DragNDropContainer = (WrappedComponent) => {
       if (nextState.isDragging !== this.state.isDragging) { // deal with dragOver delay
         return true
       }
-      if (nextState.overIndex === this.state.overIndex && this.state.isDragging) {
+      if ((nextState.overIndex === this.state.overIndex) && (nextState.lastOverIndex === this.state.lastOverIndex) && this.state.isDragging) {
         return false
       }
       return true
@@ -145,25 +145,37 @@ const DragNDropContainer = (WrappedComponent) => {
     onDrop = (e, targetIndex) => {
       const {items} = this.props
       e.preventDefault()
-      const newOrderItems = moveItem(items, targetIndex, this.state.sourceIndex)
+
+      // account for inserting later in the list, since the dropped item won't be there
+      const adjustedTargetIndex = this.state.sourceIndex > targetIndex ? targetIndex : targetIndex - 1;
+      const newOrderItems = moveItem(items, adjustedTargetIndex, this.state.sourceIndex)
       const sourceDragItem = items[this.state.sourceIndex]
       this.props.onReorderItem(newOrderItems, sourceDragItem)
     }
 
     onDragOver = (e, index) => {
       e.preventDefault()
+      let newOver = index;
+      if ((index === (this.state.sourceIndex)) || (index === (this.state.sourceIndex + 1))) {
+        newOver = -1;
+      }
       this.setState({
-        lastOverIndex: index,
-        overIndex: index,
+        lastOverIndex: e.target.dataset.position,
+        overIndex: newOver,
       })
     }
 
     onDragLeave = (e, index) => {
       e.preventDefault()
-      this.setState({
-        lastOverIndex: index,
-        overIndex: -1,
-      })
+      const currentPosition = e.target.dataset.position;
+      if (this.state.lastOverIndex !== currentPosition &&
+          (this.state.sourceIndex !== currentPosition ||
+            (this.state.sourceIndex + 1) !== currentPosition)) {
+        this.setState({
+          lastOverIndex: e.target.dataset.position,
+          overIndex: -1,
+        })
+      }
     }
 
     onTouchMove = (e, dragPreviewRef) => {
@@ -203,7 +215,7 @@ const DragNDropContainer = (WrappedComponent) => {
       const dropZone = document.elementFromPoint(touchPoint.clientX, touchPoint.clientY)
       const position = dropZone.dataset.position
       if (position) {
-        this.onDrop(e, parseInt(position, 10), 0)
+        this.onDrop(e, parseInt(position, 10))
         this.onDragEnd(e)
       } else {
         this.onDragEnd(e)
@@ -216,57 +228,47 @@ const DragNDropContainer = (WrappedComponent) => {
         isDragging: false,
         isKeyboardMoving: true,
         sourceIndex: index,
-        keyInsertIndex: index + 1,
+        keyInsertIndex: index,
         curPreview: preview,
       })
     }
 
     onKeyChangeOrder = (e) => {
-      const {items} = this.props
+      const {items} = this.props;
       if (this.state.isKeyboardMoving) {
-        e.preventDefault()
-        e.stopPropagation()
+        e.preventDefault();
+        e.stopPropagation();
         switch (e.keyCode) {
           case KeyCode.ESC: {
-            this.leaveKeyboardMoving()
-            break
+            this.leaveKeyboardMoving();
+            break;
           }
           case KeyCode.ENTER: {
-            const newOrderItems = moveItem(items, this.state.keyInsertIndex, this.state.sourceIndex)
-            const sourceDragItem = items[this.state.sourceIndex]
-            this.props.onReorderItem(newOrderItems, sourceDragItem)
+            const newOrderItems = moveItem(items, this.state.keyInsertIndex, this.state.sourceIndex);
+            const sourceDragItem = items[this.state.sourceIndex];
+            this.props.onReorderItem(newOrderItems, sourceDragItem);
             this.setState({
               isKeyboardMoving: false,
               sourceIndex: -1,
               keyInsertIndex: -1,
               curPreview: '',
-            })
-            break
+            });
+            break;
           }
           case KeyCode.ARROW_UP: {
-            // skip displaying of item which is above the source cause its insert place holder should never be displayed
-            if (this.state.keyInsertIndex - 1 === this.state.sourceIndex) {
-              if (this.state.keyInsertIndex - 2 >= 0) {
-                this.setState({keyInsertIndex: this.state.keyInsertIndex - 2})
-              }
-            } else if (this.state.keyInsertIndex - 1 >= 0) {
-              this.setState({keyInsertIndex: this.state.keyInsertIndex - 1})
-            }
-            break
+            this.setState((prevState) => {
+                return { keyInsertIndex: (prevState.keyInsertIndex > 0) ? prevState.keyInsertIndex - 1: 0 };
+            });
+            break;
           }
           case KeyCode.ARROW_DOWN: {
-            // skip displaying of item which is above the source cause its insert place holder should never be displayed
-            if (this.state.keyInsertIndex + 1 === this.state.sourceIndex) {
-              if (this.state.keyInsertIndex + 2 <= items.length) {
-                this.setState({keyInsertIndex: this.state.keyInsertIndex + 2})
-              }
-            } else if (this.state.keyInsertIndex + 1 <= items.length) {
-              this.setState({keyInsertIndex: this.state.keyInsertIndex + 1})
-            }
-            break
+            this.setState((prevState) => {
+              return { keyInsertIndex: (prevState.keyInsertIndex < (items.length - 2)) ? prevState.keyInsertIndex + 1: items.length - 1 };
+            });
+            break;
           }
           default:
-            break
+            break;
         }
       }
     }
