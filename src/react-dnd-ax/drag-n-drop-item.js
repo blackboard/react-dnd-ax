@@ -43,10 +43,14 @@ const DragNDropItem = (WrappedComponent) => {
       if (this.dragPointElem) {
         this.dragPointElem.addEventListener('touchstart', this.onTouchStart)
         this.dragPointElem.addEventListener('touchend', actions.onTouchDrop)
-        this.dragPointElem.addEventListener('drag', this.onDrag)
+        this.dragPointElem.addEventListener('drag', (e) => {
+          actions.onDrag(e, this.dragPreviewRef)
+        })
         this.dragPointElem.addEventListener('dragstart', this.onSetImageDragStart)
         this.dragPointElem.addEventListener('dragend', actions.onDragEnd)
-        this.dragPointElem.addEventListener('touchmove', this.onTouchMove)
+        this.dragPointElem.addEventListener('touchmove', (e) => {
+          actions.onTouchMove(e, this.dragPreviewRef)
+        })
         this.dragPointElem.addEventListener('click', this.onClick)
         this.dragPointElem.addEventListener('keyup', this.onEnter)
         this.itemRef.addEventListener('keydown', actions.onKeyChangeOrder)
@@ -101,10 +105,6 @@ const DragNDropItem = (WrappedComponent) => {
         this.dragPointElem.addEventListener('click', this.onClick)
         this.dragPointElem.removeEventListener('keyup', this.onEnter)
         this.dragPointElem.addEventListener('keyup', this.onEnter)
-        this.dragPointElem.removeEventListener('drag', this.onDrag)
-        this.dragPointElem.addEventListener('drag', this.onDrag)
-        this.dragPointElem.removeEventListener('touchmove', this.onTouchMove)
-        this.dragPointElem.addEventListener('touchmove', this.onTouchMove)
       }
 
       if (this.firstKeyInsertPlaceHolderRef && this.firstKeyInsertPlaceHolderRef.className.includes('show')) {
@@ -132,7 +132,7 @@ const DragNDropItem = (WrappedComponent) => {
         e.dataTransfer.setDragImage(document.getElementsByClassName('dnd-drag-placeholder')[0], 0, 0)
         :
         ''
-      e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
+      e.dataTransfer.setData('text', null) // make dnd work in FF, IE and Edge
       actions.onDragStart(e, index)
     }
 
@@ -175,14 +175,6 @@ const DragNDropItem = (WrappedComponent) => {
     onDrop = (e) => {
       const { index, actions } = this.props
       actions.onDrop(e, index)
-    }
-    onDrag = (e) => {
-      const { actions } = this.props
-      actions.onDrag(e, this.dragPreviewRef)
-    }
-    onTouchMove = (e) => {
-      const { actions } = this.props
-      actions.onTouchMove(e, this.dragPreviewRef)
     }
 
     render() {

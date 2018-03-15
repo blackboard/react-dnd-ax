@@ -81,6 +81,7 @@ const DragNDropContainer = (WrappedComponent) => {
           isKeyboardMoving: false,
           sourceIndex: -1,
           keyInsertIndex: -1,
+          overIndex: -1,
         })
       }
     }
@@ -163,7 +164,7 @@ const DragNDropContainer = (WrappedComponent) => {
         newOver = -1;
       }
       this.setState({
-        lastOverIndex: e.target.dataset.position,
+        lastOverIndex: parseInt(e.target.dataset.position, 10),
         overIndex: newOver,
       })
     }
@@ -171,7 +172,7 @@ const DragNDropContainer = (WrappedComponent) => {
     onDragLeave = (e) => {
       e.preventDefault()
 
-      const currentPosition = e.target.dataset.position;
+      const currentPosition = parseInt(e.target.dataset.position, 10);
       if (this.state.lastOverIndex !== currentPosition &&
           (this.state.sourceIndex !== currentPosition ||
             (this.state.sourceIndex + 1) !== currentPosition)) {
