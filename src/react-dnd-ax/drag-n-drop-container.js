@@ -117,6 +117,7 @@ const DragNDropContainer = (WrappedComponent) => {
     }
 
     onDragStart = (e, index) => {
+      e.stopPropagation();  // prevent other handlers from breaking our behaviors
       /**
        * Updating state causes the dnd item to re-render thus manipulating the DOM. In some cases
        * this causes dragend event to fire immediately. To prevent this wrap in a timeout.
