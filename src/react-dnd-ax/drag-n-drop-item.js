@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ClassNames from 'classnames'
-import debounce from 'lodash.debounce';
+import debounce from 'lodash.debounce'
 import { omit, getDisplayName } from './utils'
 
 import './react-dnd-ax.css'
@@ -10,10 +10,10 @@ const RESIZE_DELAY = 300
 
 const DragNDropItem = (WrappedComponent) => {
   class Wrapper extends React.Component {
-    previewWidth = null;
+    previewWidth = null
 
     resetPreviewWidth = debounce(() => {
-        this.previewWidth = null;
+        this.previewWidth = null
     }, RESIZE_DELAY)
 
     havePropsChanged = (nextProps) => {
@@ -152,7 +152,7 @@ const DragNDropItem = (WrappedComponent) => {
 
     onEnter = (e) => {
       if (e.key === 'Enter' || e.keyCode === 13) {
-        this.onClick(e);
+        this.onClick(e)
       }
     }
 
@@ -295,7 +295,7 @@ const DragNDropItem = (WrappedComponent) => {
     preview: PropTypes.element.isRequired,
   }
 
-  Wrapper.displayName = `DragNDropItem(${getDisplayName(WrappedComponent)})`;
+  Wrapper.displayName = `DragNDropItem(${getDisplayName(WrappedComponent)})`
 
   return Wrapper
 }

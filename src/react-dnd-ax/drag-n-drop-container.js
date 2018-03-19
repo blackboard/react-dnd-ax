@@ -117,7 +117,7 @@ const DragNDropContainer = (WrappedComponent) => {
     }
 
     onDragStart = (e, index) => {
-      e.stopPropagation();  // prevent other handlers from breaking our behaviors
+      e.stopPropagation()  // prevent other handlers from breaking our behaviors
       /**
        * Updating state causes the dnd item to re-render thus manipulating the DOM. In some cases
        * this causes dragend event to fire immediately. To prevent this wrap in a timeout.
@@ -131,7 +131,7 @@ const DragNDropContainer = (WrappedComponent) => {
               sourceIndex: index,
               overIndex: -1,
           })
-      });
+      })
     }
 
     onDragEnd = (e) => {
@@ -151,7 +151,7 @@ const DragNDropContainer = (WrappedComponent) => {
       e.preventDefault()
 
       // account for inserting later in the list, since the dropped item won't be there
-      const adjustedTargetIndex = this.state.sourceIndex >= targetIndex ? targetIndex : targetIndex - 1;
+      const adjustedTargetIndex = this.state.sourceIndex >= targetIndex ? targetIndex : targetIndex - 1
       const newOrderItems = moveItem(items, adjustedTargetIndex, this.state.sourceIndex)
       const sourceDragItem = items[this.state.sourceIndex]
       this.props.onReorderItem(newOrderItems, sourceDragItem)
@@ -160,9 +160,9 @@ const DragNDropContainer = (WrappedComponent) => {
     onDragOver = (e, index) => {
       e.preventDefault()
 
-      let newOver = index;
+      let newOver = index
       if ((index === (this.state.sourceIndex)) || (index === (this.state.sourceIndex + 1))) {
-        newOver = -1;
+        newOver = -1
       }
       this.setState({
         lastOverIndex: parseInt(e.target.dataset.position, 10),
@@ -173,7 +173,7 @@ const DragNDropContainer = (WrappedComponent) => {
     onDragLeave = (e) => {
       e.preventDefault()
 
-      const currentPosition = parseInt(e.target.dataset.position, 10);
+      const currentPosition = parseInt(e.target.dataset.position, 10)
       if (this.state.lastOverIndex !== currentPosition &&
           (this.state.sourceIndex !== currentPosition ||
             (this.state.sourceIndex + 1) !== currentPosition)) {
@@ -189,10 +189,10 @@ const DragNDropContainer = (WrappedComponent) => {
 
       const dropZone = document.elementFromPoint(touchPoint.clientX, touchPoint.clientY)
       if (dropZone && dropZone.dataset && dropZone.dataset.position) {
-        const index = parseInt(dropZone.dataset.position, 10);
-        let newOver = index;
+        const index = parseInt(dropZone.dataset.position, 10)
+        let newOver = index
         if ((index === (this.state.sourceIndex)) || (index === (this.state.sourceIndex + 1))) {
-          newOver = -1;
+          newOver = -1
         }
         this.setState({
           lastOverIndex: index,
@@ -245,41 +245,41 @@ const DragNDropContainer = (WrappedComponent) => {
     }
 
     onKeyChangeOrder = (e) => {
-      const {items} = this.props;
+      const {items} = this.props
       if (this.state.isKeyboardMoving) {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault()
+        e.stopPropagation()
         switch (e.keyCode) {
           case KeyCode.ESC: {
-            this.leaveKeyboardMoving();
-            break;
+            this.leaveKeyboardMoving()
+            break
           }
           case KeyCode.ENTER: {
-            const newOrderItems = moveItem(items, this.state.keyInsertIndex, this.state.sourceIndex);
-            const sourceDragItem = items[this.state.sourceIndex];
-            this.props.onReorderItem(newOrderItems, sourceDragItem);
+            const newOrderItems = moveItem(items, this.state.keyInsertIndex, this.state.sourceIndex)
+            const sourceDragItem = items[this.state.sourceIndex]
+            this.props.onReorderItem(newOrderItems, sourceDragItem)
             this.setState({
               isKeyboardMoving: false,
               sourceIndex: -1,
               keyInsertIndex: -1,
               curPreview: '',
-            });
-            break;
+            })
+            break
           }
           case KeyCode.ARROW_UP: {
             this.setState((prevState) => {
-                return { keyInsertIndex: (prevState.keyInsertIndex > 0) ? prevState.keyInsertIndex - 1: 0 };
-            });
-            break;
+                return { keyInsertIndex: (prevState.keyInsertIndex > 0) ? prevState.keyInsertIndex - 1: 0 }
+            })
+            break
           }
           case KeyCode.ARROW_DOWN: {
             this.setState((prevState) => {
-              return { keyInsertIndex: (prevState.keyInsertIndex < (items.length - 2)) ? prevState.keyInsertIndex + 1: items.length - 1 };
-            });
-            break;
+              return { keyInsertIndex: (prevState.keyInsertIndex < (items.length - 2)) ? prevState.keyInsertIndex + 1: items.length - 1 }
+            })
+            break
           }
           default:
-            break;
+            break
         }
       }
     }
@@ -310,7 +310,7 @@ const DragNDropContainer = (WrappedComponent) => {
     scrollContainerId: PropTypes.string,
   }
 
-  Wrapper.displayName = `DragNDropContainer(${getDisplayName(WrappedComponent)})`;
+  Wrapper.displayName = `DragNDropContainer(${getDisplayName(WrappedComponent)})`
 
   return Wrapper
 }

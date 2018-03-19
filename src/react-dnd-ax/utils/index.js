@@ -14,16 +14,18 @@ export const moveItem = (itemArray, targetIndex, sourceIndex) => {
 
 export const omit = (obj, ...keysToOmit) => {
   return Object.keys(obj).reduce((acc, key) => {
-    if (keysToOmit.indexOf(key) === -1) acc[key] = obj[key];
-    return acc;
-  }, {});
+    if (keysToOmit.indexOf(key) === -1) {
+      acc[key] = obj[key]
+    }
+    return acc
+  }, {})
 }
 
 export const getDisplayName = (WrappedComponent) => {
-  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
 
 export const isEdge = () => {
   // copied from: https://stackoverflow.com/questions/33152523/how-do-i-detect-ie-and-edge-browser
-  return document.documentMode || /Edge/.test(navigator.userAgent);
+  return document.documentMode || /Edge/.test(navigator.userAgent)
 }
