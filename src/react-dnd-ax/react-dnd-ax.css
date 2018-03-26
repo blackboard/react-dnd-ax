@@ -16,8 +16,6 @@
     .module-section .drop-up-half.show, .module-section .drop-down-half.show {
       display: block;
       z-index: 1000; }
-  .module-section .drop-down-half.show {
-    height: calc(50% + 20px); }
   .module-section .drop-up-half {
     top: 0; }
   .module-section .drop-down-half {
@@ -29,6 +27,11 @@
     background-color: rgba(197, 111, 213, 0.25); }
     .module-section .insert-placeholder.show {
       height: 20px; }
+      .module-section .insert-placeholder.show ~ .drop-down-half.show {
+        top: calc(50% - 10px);
+        height: calc(50% + 30px); }
+        .module-section .insert-placeholder.show ~ .drop-down-half.show ~ .drop-up-half {
+          height: calc(50% - 10px); }
   .module-section .drag-preview-item {
     position: fixed;
     display: none;

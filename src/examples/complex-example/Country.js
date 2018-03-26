@@ -36,7 +36,7 @@ class Country extends React.Component {
               linksArr.map((city, index) => {
                 return (
                   <li className="link-item" key={index}>
-                    <a href={city.link} className="link" target="_blank" alt={city.title}>{city.title}</a>
+                    <a href={city.link} className="link" target="_blank" rel="noopener noreferrer" alt={city.title}>{city.title}</a>
                   </li>
                 )
               })

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ClassNames from 'classnames'
-import debounce from 'lodash.debounce';
+import debounce from 'lodash.debounce'
 import { omit, getDisplayName } from './utils'
 
 import './react-dnd-ax.css'
@@ -10,10 +10,10 @@ const RESIZE_DELAY = 300
 
 const DragNDropItem = (WrappedComponent) => {
   class Wrapper extends React.Component {
-    previewWidth = null;
+    previewWidth = null
 
     resetPreviewWidth = debounce(() => {
-        this.previewWidth = null;
+        this.previewWidth = null
     }, RESIZE_DELAY)
 
     havePropsChanged = (nextProps) => {
@@ -76,19 +76,12 @@ const DragNDropItem = (WrappedComponent) => {
 
       if (state.isDragging) {
         // only render component around hot zone
-        if (nextProps.state.sourceIndex === index ||
+        return (nextProps.state.sourceIndex === index ||
             state.sourceIndex === index ||
-            nextProps.state.lastOverIndex === index || // as drag over does not happen sequentially, we need to render the last over element
-            (index >= (nextProps.state.overIndex - 2) && index <= (nextProps.state.overIndex + 2))) {
-          return true
-        }
-
-        // when hovering on dragging element
-        if (nextProps.state.overIndex === -1 && nextProps.state.overIndex !== state.overIndex) {
-          if (index >= state.sourceIndex - 2 && index <= state.sourceIndex + 1) {
-            return true
-          }
-        }
+            nextProps.state.lastOverIndex === index ||  // as drag over does not happen sequentially, we need to render the last over element
+            nextProps.state.overIndex === -1 ||         // when hovering on dragging element
+            nextProps.state.overIndex !== state.overIndex
+          )
       }
 
       // only render source and destination item
@@ -126,7 +119,7 @@ const DragNDropItem = (WrappedComponent) => {
           this.previewWidth = getComputedStyle(this.itemRef).getPropertyValue('width')
       }
 
-      if (this.dragPreviewRef.className.includes('show')) {
+      if (this.dragPreviewRef && this.dragPreviewRef.style && this.dragPreviewRef.className && this.dragPreviewRef.className.includes('show')) {
         this.dragPreviewRef.style.width = this.previewWidth
       }
     }
@@ -139,53 +132,48 @@ const DragNDropItem = (WrappedComponent) => {
         e.dataTransfer.setDragImage(document.getElementsByClassName('dnd-drag-placeholder')[0], 0, 0)
         :
         ''
-      e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
+      e.dataTransfer.setData('text', null) // make dnd work in FF, IE and Edge
       actions.onDragStart(e, index)
     }
 
     onTouchStart = (e) => {
         e.preventDefault()
-        const { index, actions } = this.props
 
+        const { index, actions } = this.props
         actions.onDragStart(e, index)
     }
 
     onClick = (e) => {
       e.stopPropagation()
-      const { index, actions, preview } = this.props
 
+      const { index, actions, preview } = this.props
       actions.onClickDrag(e, index, preview)
     }
 
     onEnter = (e) => {
       if (e.key === 'Enter' || e.keyCode === 13) {
-        this.onClick(e);
+        this.onClick(e)
       }
     }
 
     onDropNextIndex = (e) => {
       const { index, actions } = this.props
-
       actions.onDrop(e, index + 1)
     }
     onDragOverNextIndex = (e) => {
       const { index, actions } = this.props
-
       actions.onDragOver(e, index + 1)
     }
     onDragLeave = (e) => {
-      const { index, actions } = this.props
-
-      actions.onDragLeave(e, index)
+      const { actions } = this.props
+      actions.onDragLeave(e)
     }
     onDragOver = (e) => {
       const { index, actions } = this.props
-
       actions.onDragOver(e, index)
     }
     onDrop = (e) => {
       const { index, actions } = this.props
-
       actions.onDrop(e, index)
     }
 
@@ -195,22 +183,23 @@ const DragNDropItem = (WrappedComponent) => {
         'module-section': true,
         'is-dragging': state.isDragging && state.sourceIndex === index,
         'is-keyboard-moving': state.isKeyboardMoving && index === state.sourceIndex,
-        'should-on-focus': state.isKeyboardMoving && (index === state.keyInsertIndex || (index + 1) === state.keyInsertIndex),
+        'should-on-focus': state.isKeyboardMoving && (index === state.keyInsertIndex),
       })
       const dropUpHalfClass = ClassNames({
         'drop-up-half': true,
-        show: state.isDragging && index !== state.sourceIndex && index !== (state.sourceIndex + 1),
+        show: state.isDragging && index !== state.sourceIndex,
       })
       const dropDownHalfClass = ClassNames({
         'drop-down-half': true,
-        show: state.isDragging && index !== state.sourceIndex && index !== (state.sourceIndex - 1),
+        show: state.isDragging && index !== state.sourceIndex,
       })
       const firstKeyInsertPlaceHolderClass = ClassNames({
         'key-insert-placeholder': true,
         show: state.isKeyboardMoving && state.keyInsertIndex === 0 && state.sourceIndex !== 0,
       })
       const firstInsertPlaceHolderClass = ClassNames({
-        'insert-placeholder first-insert-placeholder': true,
+        'insert-placeholder': true,
+        'first-insert-placeholder': true,
         show: state.isDragging && state.overIndex === 0,
       })
       const insertPlaceholderClass = ClassNames({
@@ -224,7 +213,7 @@ const DragNDropItem = (WrappedComponent) => {
       const downKeyInsertPlaceHolderRef = ClassNames({
         'key-insert-placeholder': true,
         show: state.isKeyboardMoving &&
-        (index + 1) === state.keyInsertIndex &&
+        (state.sourceIndex > state.keyInsertIndex ? index === state.keyInsertIndex - 1 : index === state.keyInsertIndex) &&
         index !== state.sourceIndex,
       })
 
@@ -261,13 +250,7 @@ const DragNDropItem = (WrappedComponent) => {
               }}
             />
           </div>
-          <div
-            className={dropUpHalfClass}
-            data-position={index}
-            onDrop={this.onDrop}
-            onDragOver={this.onDragOver}
-            onDragLeave={this.onDragLeave}
-          />
+          <div className={insertPlaceholderClass}/>
           <div
             className={dropDownHalfClass}
             data-position={index + 1}
@@ -275,7 +258,13 @@ const DragNDropItem = (WrappedComponent) => {
             onDragOver={this.onDragOverNextIndex}
             onDragLeave={this.onDragLeave}
           />
-          <div className={insertPlaceholderClass}/>
+          <div
+            className={dropUpHalfClass}
+            data-position={index}
+            onDrop={this.onDrop}
+            onDragOver={this.onDragOver}
+            onDragLeave={this.onDragLeave}
+          />
           <div
             className={dragPreviewItemClass}
             ref={(ref) => {
@@ -306,7 +295,7 @@ const DragNDropItem = (WrappedComponent) => {
     preview: PropTypes.element.isRequired,
   }
 
-  Wrapper.displayName = `DragNDropItem(${getDisplayName(WrappedComponent)})`;
+  Wrapper.displayName = `DragNDropItem(${getDisplayName(WrappedComponent)})`
 
   return Wrapper
 }

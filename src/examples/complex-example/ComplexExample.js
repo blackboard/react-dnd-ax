@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { DragNDropContainer, DragNDropItem } from 'react-dnd-ax'
+import { DragNDropContainer, DragNDropItem } from '../../react-dnd-ax'
 import { countries } from '../data'
 import Country from './Country'
 
