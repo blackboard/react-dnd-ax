@@ -160,8 +160,16 @@ def unitTest() {
   stage('Unit Tests') {
     sh '''#!/usr/bin/env bash
       set -e
-      npm run test
+      npm run test:coverage
     '''
+    publishHTML( target: [
+      allowMissing: false,
+      alwaysLinkToLastBuild: true,
+      keepAll: true,
+      reportDir: 'coverage/lcov-report',
+      reportFiles: 'index.html',
+      reportName: 'Code Coverage Report'
+    ] )
     // step( [ $class: 'JUnitResultArchiver',
     //         testResults: 'test-report.xml',
     //         testDataPublishers: [ [ $class: 'AttachmentPublisher' ] ]

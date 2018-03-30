@@ -86,6 +86,7 @@
     "demo:build": "build-storybook -c .storybook -o docs",
     "demo:build-temp": "build-storybook -c .storybook -o ../react-dnd-ax-demo/docs",
     "test": "node scripts/test.js --env=jsdom",
+    "test:coverage": "node scripts/test.js --coverage",
     "build": "npm run build:commonjs && npm run build:es6 && npm run build:umd && npm run npm:css",
     "build:commonjs": "npm run clean:commonjs && cross-env BABEL_ENV=commonjs babel src/react-dnd-ax --out-dir dist/commonjs --ignore *.example.js,*.test.js",
     "build:es6": "npm run clean:es6 && cross-env BABEL_ENV=es6 BABEL_DISABLE_CACHE=1 babel src/react-dnd-ax --out-dir dist/es6 --ignore *.test.js",
