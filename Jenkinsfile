@@ -170,10 +170,10 @@ def unitTest() {
       reportFiles: 'index.html',
       reportName: 'Code Coverage Report'
     ] )
-    // step( [ $class: 'JUnitResultArchiver',
-    //         testResults: 'test-report.xml',
-    //         testDataPublishers: [ [ $class: 'AttachmentPublisher' ] ]
-    //       ] )
+    step( [ $class: 'JUnitResultArchiver',
+            testResults: 'test-report.xml',
+            testDataPublishers: [ [ $class: 'AttachmentPublisher' ] ]
+          ] )
   }
 }
 
