@@ -227,7 +227,7 @@ def notifySlack() {
   slackSend tokenCredentialId: 'slack-learn-engineering',
             color: color,
             message: message,
-            channel: '#notification-tests'
+            channel: '#team_metis'
 }
 
 def notifyStash() {
