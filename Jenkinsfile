@@ -316,6 +316,10 @@ def getContextFreeChanges() {
  * Do we need to actually increment version in package.json
  */
 def needToBumpVersion() {
+  if(triggeredByVersionBump()) {
+    return false;
+  }
+
   def filesChanged = getFilesChangedSinceLastSuccessfulBuild()
   if (filesChanged.size() == 0) {
     echo "INFO: No files changed, no need to bump version"
@@ -330,4 +334,22 @@ def needToBumpVersion() {
   }
   echo "INFO: We do need to bump the version, more than just package.json version string changed"
   return true
+}
+
+def triggeredByVersionBump() {
+  def changeSetCount = 0;
+  def ciSkipCount = 0;
+  if (currentBuild.changeSets != null) {
+    for (changeSetList in currentBuild.changeSets) {
+      for (changeSet in changeSetList) {
+        changeSetCount++;
+        if (changeSet.msg.contains('Automatic version bump to') ||
+            changeSet.msg.contains('[skip-ci]')) {
+          ciSkipCount++;
+        }
+      }
+    }
+  }
+
+  return (changeSetCount > 0 && changeSetCount == ciSkipCount)
 }
