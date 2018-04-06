@@ -9,3 +9,4 @@ src
 yarn.lock
 Dockerfile
 docker-compose.yml
+test-report.xml
