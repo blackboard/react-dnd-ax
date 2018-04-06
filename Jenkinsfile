@@ -42,7 +42,7 @@ podTemplate(
             prepare()
             unitTest()
             build()
-            if( isProductionBranch() && needToBumpVersion() ) {
+            if(isProductionBranch() && !triggeredByVersionBump()) {
               publishToRepo()
             }
           }
@@ -188,8 +188,10 @@ def publishToRepo() {
     def npmRegistry = "//npm.bbpd.io/repository/bb-npm-private/:_authToken="
     def npmToken = sh( script: "cat /home/jenkins/npm-publish-token/token", returnStdout: true)
     sh "echo ${npmRegistry + npmToken} > $HOME/.npmrc"
-    npm "version patch -m \"Automatic version bump to %s\""
-    git "push origin $BRANCH_NAME"
+    if(needToBumpVersion()) {
+      npm "version patch -m \"Automatic version bump to %s\""
+      git "push origin $BRANCH_NAME"
+    }
     npm "publish"
   }
 }
