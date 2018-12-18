@@ -254,6 +254,7 @@ const DragNDropContainer = (WrappedComponent) => {
             this.leaveKeyboardMoving()
             break
           }
+          case KeyCode.SPACE:
           case KeyCode.ENTER: {
             const newOrderItems = moveItem(items, this.state.keyInsertIndex, this.state.sourceIndex)
             const sourceDragItem = items[this.state.sourceIndex]
