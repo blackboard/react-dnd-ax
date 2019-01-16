@@ -53,6 +53,7 @@ const DragNDropItem = (WrappedComponent) => {
         })
         this.dragPointElem.addEventListener('click', this.onClick)
         this.dragPointElem.addEventListener('keyup', this.onEnter)
+        this.dragPointElem.addEventListener('keyup', this.onSpace)
         this.itemRef.addEventListener('keydown', actions.onKeyChangeOrder)
       }
     }
@@ -105,6 +106,8 @@ const DragNDropItem = (WrappedComponent) => {
         this.dragPointElem.addEventListener('click', this.onClick)
         this.dragPointElem.removeEventListener('keyup', this.onEnter)
         this.dragPointElem.addEventListener('keyup', this.onEnter)
+        this.dragPointElem.removeEventListener('keyup', this.onSpace)
+        this.dragPointElem.addEventListener('keyup', this.onSpace)
       }
 
       if (this.firstKeyInsertPlaceHolderRef && this.firstKeyInsertPlaceHolderRef.className.includes('show')) {
@@ -132,7 +135,8 @@ const DragNDropItem = (WrappedComponent) => {
         e.dataTransfer.setDragImage(document.getElementsByClassName('dnd-drag-placeholder')[0], 0, 0)
         :
         ''
-      e.dataTransfer.setData('text', null) // make dnd work in FF, IE and Edge
+
+      e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
       actions.onDragStart(e, index)
     }
 
@@ -152,6 +156,12 @@ const DragNDropItem = (WrappedComponent) => {
 
     onEnter = (e) => {
       if (e.key === 'Enter' || e.keyCode === 13) {
+        this.onClick(e)
+      }
+    }
+
+    onSpace = (e) => {
+      if (e.key === 'Space' || e.keyCode === 32) {
         this.onClick(e)
       }
     }
