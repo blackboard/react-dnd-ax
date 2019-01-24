@@ -10,9 +10,6 @@
     "type": "git",
     "url": "https://github.com/blackboard/react-dnd-ax.git"
   },
-  "publishConfig": {
-    "registry": "http://npm.bbpd.io/repository/bb-npm-private/"
-  },
   "dependencies": {
     "classnames": "^2.2.5",
     "lodash.debounce": "^4.0.8"
