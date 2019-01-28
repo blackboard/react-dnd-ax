@@ -132,7 +132,8 @@ const DragNDropItem = (WrappedComponent) => {
         e.dataTransfer.setDragImage(document.getElementsByClassName('dnd-drag-placeholder')[0], 0, 0)
         :
         ''
-      e.dataTransfer.setData('text', null) // make dnd work in FF, IE and Edge
+      
+      e.dataTransfer.setData('text', '') // make dnd work in FF, IE and Edge
       actions.onDragStart(e, index)
     }
 
