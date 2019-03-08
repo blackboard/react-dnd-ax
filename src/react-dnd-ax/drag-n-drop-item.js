@@ -118,11 +118,10 @@ const DragNDropItem = (WrappedComponent) => {
         this.itemRef.focus()
       }
 
-      if (this.previewWidth == null) {
-          this.previewWidth = getComputedStyle(this.itemRef).getPropertyValue('width')
-      }
-
       if (this.dragPreviewRef && this.dragPreviewRef.style && this.dragPreviewRef.className && this.dragPreviewRef.className.includes('show')) {
+        if (this.previewWidth == null) {
+          this.previewWidth = getComputedStyle(this.itemRef).getPropertyValue('width')
+        }
         this.dragPreviewRef.style.width = this.previewWidth
       }
     }
